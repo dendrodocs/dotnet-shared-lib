@@ -16,7 +16,8 @@ using static Nuke.Common.Tools.ReportGenerator.ReportGeneratorTasks;
 using static Serilog.Log;
 
 [GitHubActions("Continuous", 
-    GitHubActionsImage.UbuntuLatest, 
+    GitHubActionsImage.UbuntuLatest,
+    AutoGenerate = false,
     FetchDepth = 0,
     OnPushBranches = ["main"],
     OnPullRequestBranches = ["main"],
