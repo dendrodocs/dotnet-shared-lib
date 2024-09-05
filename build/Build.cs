@@ -216,6 +216,7 @@ class Build : NukeBuild
 
     Target PushGithub => _ => _
         .DependsOn(Pack)
+        .OnlyWhenDynamic(() => GitHubUser == "dendrodocs")
         .OnlyWhenDynamic(() => !IsLocalBuild && !IsTag)
         .ProceedAfterFailure()
         .Executes(() =>
