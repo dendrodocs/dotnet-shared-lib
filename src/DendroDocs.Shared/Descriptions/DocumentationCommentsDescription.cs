@@ -8,8 +8,10 @@ namespace DendroDocs;
 
 public partial class DocumentationCommentsDescription : IHaveDocumentationComments
 {
-    private static readonly Regex InlineWhitespace = new("(\\s{2,})", RegexOptions.ECMAScript);
-    private static readonly Regex MemberIdPrefix = new("^[NTFPME\\!]:", RegexOptions.ECMAScript);
+    [GeneratedRegex("(\\s{2,})", RegexOptions.ECMAScript)]
+    private static partial Regex InlineWhitespace();
+    [GeneratedRegex("^[NTFPME\\!]:", RegexOptions.ECMAScript)]
+    private static partial Regex MemberIdPrefix();
 
     [DefaultValue("")]
     public string Example { get; set; } = string.Empty;
@@ -246,7 +248,7 @@ public partial class DocumentationCommentsDescription : IHaveDocumentationCommen
 
         if (removeNewLines)
         {
-            stringBuilder.Append(InlineWhitespace.Replace(text, " ").Trim());
+            stringBuilder.Append(InlineWhitespace().Replace(text, " ").Trim());
         }
         else
         {
@@ -285,6 +287,6 @@ public partial class DocumentationCommentsDescription : IHaveDocumentationCommen
             return string.Empty;
         }
 
-        return MemberIdPrefix.Replace(value, string.Empty);
+        return MemberIdPrefix().Replace(value, string.Empty);
     }
 }
