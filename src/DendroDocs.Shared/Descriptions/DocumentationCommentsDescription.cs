@@ -239,7 +239,7 @@ public partial class DocumentationCommentsDescription : IHaveDocumentationCommen
 
     private static void ProcessInlineContent(StringBuilder stringBuilder, string text, bool removeNewLines)
     {
-        if (stringBuilder.Length > 0 && stringBuilder[stringBuilder.Length - 1] != ' ' && stringBuilder[stringBuilder.Length - 1] != '\n')
+        if (stringBuilder.Length > 0 && stringBuilder[^1] != ' ' && stringBuilder[^1] != '\n')
         {
             stringBuilder.Append(' ');
         }
@@ -256,7 +256,7 @@ public partial class DocumentationCommentsDescription : IHaveDocumentationCommen
 
     private void ProcessBlockContent(StringBuilder stringBuilder, XElement element)
     {
-        if (stringBuilder.Length > 0 && stringBuilder[stringBuilder.Length - 1] != '\n')
+        if (stringBuilder.Length > 0 && stringBuilder[^1] != '\n')
         {
             stringBuilder.Append('\n');
         }
