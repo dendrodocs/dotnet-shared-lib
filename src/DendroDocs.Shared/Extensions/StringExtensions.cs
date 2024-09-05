@@ -31,6 +31,6 @@ public static class StringExtensions
             return [];
         }
 
-        return fullName.Split(new[] { Dot }, StringSplitOptions.RemoveEmptyEntries);
+        return fullName.Split([Dot], StringSplitOptions.RemoveEmptyEntries);
     }
 }
