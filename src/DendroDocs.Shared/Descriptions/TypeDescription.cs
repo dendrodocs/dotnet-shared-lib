@@ -6,6 +6,29 @@ namespace DendroDocs;
 [DebuggerDisplay("{Type} {Name,nq} ({Namespace,nq})")]
 public class TypeDescription(TypeType type, string? fullName) : IHaveModifiers
 {
+    [Newtonsoft.Json.JsonConstructor]
+    [JsonConstructor]
+    public TypeDescription(
+        TypeType type,  string? fullName, 
+        IReadOnlyList<FieldDescription> fields,
+        IReadOnlyList<ConstructorDescription> constructors, 
+        IReadOnlyList<PropertyDescription> properties,
+        IReadOnlyList<MethodDescription> methods,
+        IReadOnlyList<EnumMemberDescription> enumMembers,
+        IReadOnlyList<EventDescription> events,
+        List<AttributeDescription> attributes
+    )
+        : this(type, fullName)
+    {
+        if (fields is not null) this.fields = [.. fields];
+        if (constructors is not null) this.constructors = [.. constructors];
+        if (properties is not null) this.properties = [.. properties];
+        if (methods is not null) this.methods = [.. methods];
+        if (enumMembers is not null) this.enumMembers = [.. enumMembers];
+        if (events is not null) this.events = [.. events];
+        if (attributes is not null) this.Attributes.AddRange(attributes);
+    }
+
     [Newtonsoft.Json.JsonProperty(Order = 1, PropertyName = nameof(Fields))]
     private readonly List<FieldDescription> fields = [];
 

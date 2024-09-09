@@ -11,5 +11,5 @@ public class AttributeDescription(string? type, string? name)
 
     [Newtonsoft.Json.JsonProperty(ItemTypeNameHandling = Newtonsoft.Json.TypeNameHandling.None)]
     [Newtonsoft.Json.JsonConverter(typeof(ConcreteTypeConverter<List<AttributeArgumentDescription>>))]
-    public List<AttributeArgumentDescription> Arguments { get; } = [];
+    public List<AttributeArgumentDescription> Arguments { get; init; } = [];
 }
