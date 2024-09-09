@@ -8,7 +8,7 @@ public interface IHaveAMethodBody : IHaveModifiers
 
     List<ParameterDescription> Parameters { get; }
 
-    [JsonProperty(ItemTypeNameHandling = TypeNameHandling.Objects)]
+    [Newtonsoft.Json.JsonProperty(ItemTypeNameHandling = Newtonsoft.Json.TypeNameHandling.Objects)]
     List<Statement> Statements { get; }
 
     List<AttributeDescription> Attributes { get; }

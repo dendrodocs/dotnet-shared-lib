@@ -7,7 +7,7 @@ public class Switch : Statement
 
     public string? Expression { get; set; }
 
-    [JsonIgnore]
+    [Newtonsoft.Json.JsonIgnore]
     public override List<Statement> Statements => this.Sections.SelectMany(s => s.Statements).ToList();
 
     [OnDeserialized]

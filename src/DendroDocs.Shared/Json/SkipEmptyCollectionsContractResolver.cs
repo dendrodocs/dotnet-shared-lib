@@ -1,3 +1,4 @@
+using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using System.Collections;
 using System.Reflection;
@@ -9,7 +10,7 @@ namespace DendroDocs.Json;
 /// </remarks>>
 public class SkipEmptyCollectionsContractResolver : DefaultContractResolver
 {
-    protected override JsonProperty CreateProperty(MemberInfo member, MemberSerialization memberSerialization)
+    protected override Newtonsoft.Json.Serialization.JsonProperty CreateProperty(MemberInfo member, MemberSerialization memberSerialization)
     {
         var property = base.CreateProperty(member, memberSerialization);
 

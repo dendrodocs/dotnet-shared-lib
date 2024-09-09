@@ -8,8 +8,8 @@ public class MethodDescription(string? returnType, string name) : MemberDescript
     [DefaultValue("void")]
     public string ReturnType { get; } = returnType ?? "void";
 
-    [JsonProperty(ItemTypeNameHandling = TypeNameHandling.None)]
-    [JsonConverter(typeof(ConcreteTypeConverter<List<ParameterDescription>>))]
+    [Newtonsoft.Json.JsonProperty(ItemTypeNameHandling = Newtonsoft.Json.TypeNameHandling.None)]
+    [Newtonsoft.Json.JsonConverter(typeof(ConcreteTypeConverter<List<ParameterDescription>>))]
     public List<ParameterDescription> Parameters { get; } = [];
 
     public List<Statement> Statements { get; } = [];

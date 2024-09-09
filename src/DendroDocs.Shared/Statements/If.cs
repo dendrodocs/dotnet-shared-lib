@@ -5,7 +5,7 @@ public class If : Statement
 {
     public List<IfElseSection> Sections { get; } = [];
 
-    [JsonIgnore]
+    [Newtonsoft.Json.JsonIgnore]
     public override List<Statement> Statements => this.Sections.SelectMany(s => s.Statements).ToList();
 
     [OnDeserialized]

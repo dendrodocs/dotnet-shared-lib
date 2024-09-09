@@ -2,10 +2,10 @@ namespace DendroDocs;
 
 public interface IMemberable : IHaveModifiers
 {
-    [JsonIgnore]
+    [Newtonsoft.Json.JsonIgnore]
     MemberType MemberType { get; }
 
-    [JsonProperty(Order = -3)]
+    [Newtonsoft.Json.JsonProperty(Order = -3)]
     string Name { get; }
 
     DocumentationCommentsDescription? DocumentationComments { get; internal set; }
