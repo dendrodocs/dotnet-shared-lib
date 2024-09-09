@@ -2,10 +2,10 @@ namespace DendroDocs;
 
 public abstract class Statement
 {
-    [JsonProperty(ItemTypeNameHandling = TypeNameHandling.Objects)]
+    [Newtonsoft.Json.JsonProperty(ItemTypeNameHandling = Newtonsoft.Json.TypeNameHandling.Objects)]
     public virtual List<Statement> Statements { get; } = [];
 
-    [JsonIgnore]
+    [Newtonsoft.Json.JsonIgnore]
     public object? Parent
     {
         get; internal set;

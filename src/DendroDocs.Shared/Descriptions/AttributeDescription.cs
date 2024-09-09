@@ -9,7 +9,7 @@ public class AttributeDescription(string? type, string? name)
 
     public string Name { get; } = name ?? throw new ArgumentNullException(nameof(name));
 
-    [JsonProperty(ItemTypeNameHandling = TypeNameHandling.None)]
-    [JsonConverter(typeof(ConcreteTypeConverter<List<AttributeArgumentDescription>>))]
+    [Newtonsoft.Json.JsonProperty(ItemTypeNameHandling = Newtonsoft.Json.TypeNameHandling.None)]
+    [Newtonsoft.Json.JsonConverter(typeof(ConcreteTypeConverter<List<AttributeArgumentDescription>>))]
     public List<AttributeArgumentDescription> Arguments { get; } = [];
 }

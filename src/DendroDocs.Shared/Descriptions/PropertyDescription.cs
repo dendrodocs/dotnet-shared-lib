@@ -7,7 +7,7 @@ public class PropertyDescription(string type, string name) : MemberDescription(n
 
     public string? Initializer { get; set; }
         
-    [JsonIgnore]
+    [Newtonsoft.Json.JsonIgnore]
     public bool HasInitializer => !string.IsNullOrWhiteSpace(this.Initializer);
 
     public override MemberType MemberType => MemberType.Property;

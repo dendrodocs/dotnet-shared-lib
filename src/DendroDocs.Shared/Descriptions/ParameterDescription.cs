@@ -11,7 +11,7 @@ public class ParameterDescription(string type, string name)
 
     public bool HasDefaultValue { get; set; }
 
-    [JsonProperty(ItemTypeNameHandling = TypeNameHandling.None)]
-    [JsonConverter(typeof(ConcreteTypeConverter<List<AttributeDescription>>))]
+    [Newtonsoft.Json.JsonProperty(ItemTypeNameHandling = Newtonsoft.Json.TypeNameHandling.None)]
+    [Newtonsoft.Json.JsonConverter(typeof(ConcreteTypeConverter<List<AttributeDescription>>))]
     public List<AttributeDescription> Attributes { get; init; } = [];
 }

@@ -9,17 +9,17 @@ public abstract class MemberDescription(string name) : IMemberable
     public string Name { get; } = name ?? throw new ArgumentNullException("name");
 
     [DefaultValue(Modifier.Private)]
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
+    [Newtonsoft.Json.JsonProperty(DefaultValueHandling = Newtonsoft.Json.DefaultValueHandling.IgnoreAndPopulate)]
     public Modifier Modifiers { get; set; }
 
-    [JsonIgnore]
+    [Newtonsoft.Json.JsonIgnore]
     public bool IsInherited { get; internal set; } = false;
 
-    [JsonConverter(typeof(ConcreteTypeConverter<DocumentationCommentsDescription>))]
+    [Newtonsoft.Json.JsonConverter(typeof(ConcreteTypeConverter<DocumentationCommentsDescription>))]
     public DocumentationCommentsDescription? DocumentationComments { get; set; }
 
-    [JsonProperty(ItemTypeNameHandling = TypeNameHandling.None)]
-    [JsonConverter(typeof(ConcreteTypeConverter<List<AttributeDescription>>))]
+    [Newtonsoft.Json.JsonProperty(ItemTypeNameHandling = Newtonsoft.Json.TypeNameHandling.None)]
+    [Newtonsoft.Json.JsonConverter(typeof(ConcreteTypeConverter<List<AttributeDescription>>))]
     public List<AttributeDescription> Attributes { get; init; } = [];
 
     public override bool Equals(object? obj)

@@ -6,22 +6,22 @@ namespace DendroDocs;
 [DebuggerDisplay("{Type} {Name,nq} ({Namespace,nq})")]
 public class TypeDescription(TypeType type, string? fullName) : IHaveModifiers
 {
-    [JsonProperty(Order = 1, PropertyName = nameof(Fields))]
+    [Newtonsoft.Json.JsonProperty(Order = 1, PropertyName = nameof(Fields))]
     private readonly List<FieldDescription> fields = [];
 
-    [JsonProperty(Order = 2, PropertyName = nameof(Constructors))]
+    [Newtonsoft.Json.JsonProperty(Order = 2, PropertyName = nameof(Constructors))]
     private readonly List<ConstructorDescription> constructors = [];
 
-    [JsonProperty(Order = 3, PropertyName = nameof(Properties))]
+    [Newtonsoft.Json.JsonProperty(Order = 3, PropertyName = nameof(Properties))]
     private readonly List<PropertyDescription> properties = [];
 
-    [JsonProperty(Order = 4, PropertyName = nameof(Methods))]
+    [Newtonsoft.Json.JsonProperty(Order = 4, PropertyName = nameof(Methods))]
     private readonly List<MethodDescription> methods = [];
 
-    [JsonProperty(Order = 5, PropertyName = nameof(EnumMembers))]
+    [Newtonsoft.Json.JsonProperty(Order = 5, PropertyName = nameof(EnumMembers))]
     private readonly List<EnumMemberDescription> enumMembers = [];
 
-    [JsonProperty(Order = 6, PropertyName = nameof(Events))]
+    [Newtonsoft.Json.JsonProperty(Order = 6, PropertyName = nameof(Events))]
     private readonly List<EventDescription> events = [];
 
     public TypeType Type { get; } = type;
@@ -33,35 +33,35 @@ public class TypeDescription(TypeType type, string? fullName) : IHaveModifiers
     public List<string> BaseTypes { get; } = [];
 
     [DefaultValue(Modifier.Internal)]
-    [JsonProperty(DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
+    [Newtonsoft.Json.JsonProperty(DefaultValueHandling = Newtonsoft.Json.DefaultValueHandling.IgnoreAndPopulate)]
     public Modifier Modifiers { get; set; }
 
-    [JsonProperty(ItemTypeNameHandling = TypeNameHandling.None)]
-    [JsonConverter(typeof(ConcreteTypeConverter<List<AttributeDescription>>))]
+    [Newtonsoft.Json.JsonProperty(ItemTypeNameHandling = Newtonsoft.Json.TypeNameHandling.None)]
+    [Newtonsoft.Json.JsonConverter(typeof(ConcreteTypeConverter<List<AttributeDescription>>))]
     public List<AttributeDescription> Attributes { get; } = [];
 
-    [JsonIgnore]
+    [Newtonsoft.Json.JsonIgnore]
     public string Name => this.FullName.ClassName();
 
-    [JsonIgnore]
+    [Newtonsoft.Json.JsonIgnore]
     public string Namespace => this.FullName.Namespace();
 
-    [JsonIgnore]
+    [Newtonsoft.Json.JsonIgnore]
     public IReadOnlyList<ConstructorDescription> Constructors => this.constructors;
 
-    [JsonIgnore]
+    [Newtonsoft.Json.JsonIgnore]
     public IReadOnlyList<PropertyDescription> Properties => this.properties;
 
-    [JsonIgnore]
+    [Newtonsoft.Json.JsonIgnore]
     public IReadOnlyList<MethodDescription> Methods => this.methods;
 
-    [JsonIgnore]
+    [Newtonsoft.Json.JsonIgnore]
     public IReadOnlyList<EventDescription> Events => this.events;
 
-    [JsonIgnore]
+    [Newtonsoft.Json.JsonIgnore]
     public IReadOnlyList<FieldDescription> Fields => this.fields;
 
-    [JsonIgnore]
+    [Newtonsoft.Json.JsonIgnore]
     public IReadOnlyList<EnumMemberDescription> EnumMembers => this.enumMembers;
 
     public void AddMember(MemberDescription member)

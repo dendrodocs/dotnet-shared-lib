@@ -7,7 +7,7 @@ public class EventDescription(string type, string name) : MemberDescription(name
 
     public string? Initializer { get; set; }
 
-    [JsonIgnore]
+    [Newtonsoft.Json.JsonIgnore]
     public bool HasInitializer => this.Initializer is not null;
 
     public override MemberType MemberType => MemberType.Event;
