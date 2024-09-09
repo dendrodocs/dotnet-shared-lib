@@ -13,6 +13,7 @@ public abstract class MemberDescription(string name) : IMemberable
     public Modifier Modifiers { get; set; }
 
     [Newtonsoft.Json.JsonIgnore]
+    [JsonIgnore]
     public bool IsInherited { get; internal set; } = false;
 
     [Newtonsoft.Json.JsonConverter(typeof(ConcreteTypeConverter<DocumentationCommentsDescription>))]

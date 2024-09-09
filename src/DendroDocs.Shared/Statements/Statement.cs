@@ -6,6 +6,7 @@ public abstract class Statement
     public virtual List<Statement> Statements { get; } = [];
 
     [Newtonsoft.Json.JsonIgnore]
+    [JsonIgnore]
     public object? Parent
     {
         get; internal set;
