@@ -70,6 +70,9 @@ public class TypeDescription(TypeType type, string? fullName) : IHaveModifiers
     public string Namespace => this.FullName.Namespace();
 
     [Newtonsoft.Json.JsonIgnore]
+    public IReadOnlyList<FieldDescription> Fields => this.fields;
+
+    [Newtonsoft.Json.JsonIgnore]
     public IReadOnlyList<ConstructorDescription> Constructors => this.constructors;
 
     [Newtonsoft.Json.JsonIgnore]
@@ -79,13 +82,10 @@ public class TypeDescription(TypeType type, string? fullName) : IHaveModifiers
     public IReadOnlyList<MethodDescription> Methods => this.methods;
 
     [Newtonsoft.Json.JsonIgnore]
-    public IReadOnlyList<EventDescription> Events => this.events;
-
-    [Newtonsoft.Json.JsonIgnore]
-    public IReadOnlyList<FieldDescription> Fields => this.fields;
-
-    [Newtonsoft.Json.JsonIgnore]
     public IReadOnlyList<EnumMemberDescription> EnumMembers => this.enumMembers;
+
+    [Newtonsoft.Json.JsonIgnore]
+    public IReadOnlyList<EventDescription> Events => this.events;
 
     public void AddMember(MemberDescription member)
     {
