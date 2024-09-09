@@ -5,5 +5,6 @@ public class EnumMemberDescription(string name, string? value) : MemberDescripti
 {
     public string? Value { get; } = value;
 
+    [JsonIgnore]
     public override MemberType MemberType => MemberType.EnumMember;
 }
