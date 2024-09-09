@@ -7,7 +7,7 @@ public class ConstructorDescription(string name) : MemberDescription(name), IHav
 {
     [JsonProperty(ItemTypeNameHandling = TypeNameHandling.None)]
     [JsonConverter(typeof(ConcreteTypeConverter<List<ParameterDescription>>))]
-    public List<IParameterDescription> Parameters { get; } = [];
+    public List<ParameterDescription> Parameters { get; } = [];
 
     public List<Statement> Statements { get; } = [];
 

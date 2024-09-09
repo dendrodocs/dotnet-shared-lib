@@ -6,7 +6,7 @@ using Attribute = DendroDocs.DocumentationComments.Attribute;
 
 namespace DendroDocs;
 
-public partial class DocumentationCommentsDescription : IHaveDocumentationComments
+public partial class DocumentationCommentsDescription
 {
     [GeneratedRegex("(\\s{2,})", RegexOptions.ECMAScript)]
     private static partial Regex InlineWhitespace();

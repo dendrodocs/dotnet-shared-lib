@@ -38,7 +38,7 @@ public class TypeDescription(TypeType type, string? fullName) : IHaveModifiers
 
     [JsonProperty(ItemTypeNameHandling = TypeNameHandling.None)]
     [JsonConverter(typeof(ConcreteTypeConverter<List<AttributeDescription>>))]
-    public List<IAttributeDescription> Attributes { get; } = [];
+    public List<AttributeDescription> Attributes { get; } = [];
 
     [JsonIgnore]
     public string Name => this.FullName.ClassName();

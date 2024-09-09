@@ -2,14 +2,14 @@ namespace DendroDocs;
 
 public interface IHaveAMethodBody : IHaveModifiers
 {
-    IHaveDocumentationComments? DocumentationComments { get; set; }
+    DocumentationCommentsDescription? DocumentationComments { get; set; }
 
     string Name { get; }
 
-    List<IParameterDescription> Parameters { get; }
+    List<ParameterDescription> Parameters { get; }
 
     [JsonProperty(ItemTypeNameHandling = TypeNameHandling.Objects)]
     List<Statement> Statements { get; }
 
-    List<IAttributeDescription> Attributes { get; }
+    List<AttributeDescription> Attributes { get; }
 }
