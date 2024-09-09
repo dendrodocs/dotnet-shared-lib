@@ -8,5 +8,5 @@ public interface IMemberable : IHaveModifiers
     [JsonProperty(Order = -3)]
     string Name { get; }
 
-    IHaveDocumentationComments? DocumentationComments { get; internal set; }
+    DocumentationCommentsDescription? DocumentationComments { get; internal set; }
 }

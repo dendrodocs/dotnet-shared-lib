@@ -3,7 +3,7 @@ using DendroDocs.Json;
 namespace DendroDocs;
 
 [DebuggerDisplay("Attribute {Type} {Name}")]
-public class AttributeDescription(string? type, string? name) : IAttributeDescription
+public class AttributeDescription(string? type, string? name)
 {
     public string Type { get; } = type ?? throw new ArgumentNullException(nameof(type));
 
@@ -11,5 +11,5 @@ public class AttributeDescription(string? type, string? name) : IAttributeDescri
 
     [JsonProperty(ItemTypeNameHandling = TypeNameHandling.None)]
     [JsonConverter(typeof(ConcreteTypeConverter<List<AttributeArgumentDescription>>))]
-    public List<IAttributeArgumentDescription> Arguments { get; } = [];
+    public List<AttributeArgumentDescription> Arguments { get; } = [];
 }

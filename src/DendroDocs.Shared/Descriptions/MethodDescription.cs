@@ -10,7 +10,7 @@ public class MethodDescription(string? returnType, string name) : MemberDescript
 
     [JsonProperty(ItemTypeNameHandling = TypeNameHandling.None)]
     [JsonConverter(typeof(ConcreteTypeConverter<List<ParameterDescription>>))]
-    public List<IParameterDescription> Parameters { get; } = [];
+    public List<ParameterDescription> Parameters { get; } = [];
 
     public List<Statement> Statements { get; } = [];
 

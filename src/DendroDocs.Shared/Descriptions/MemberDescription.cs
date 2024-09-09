@@ -16,11 +16,11 @@ public abstract class MemberDescription(string name) : IMemberable
     public bool IsInherited { get; internal set; } = false;
 
     [JsonConverter(typeof(ConcreteTypeConverter<DocumentationCommentsDescription>))]
-    public IHaveDocumentationComments? DocumentationComments { get; set; }
+    public DocumentationCommentsDescription? DocumentationComments { get; set; }
 
     [JsonProperty(ItemTypeNameHandling = TypeNameHandling.None)]
     [JsonConverter(typeof(ConcreteTypeConverter<List<AttributeDescription>>))]
-    public List<IAttributeDescription> Attributes { get; } = [];
+    public List<AttributeDescription> Attributes { get; init; } = [];
 
     public override bool Equals(object? obj)
     {
