@@ -5,6 +5,14 @@ namespace DendroDocs;
 [DebuggerDisplay("Method {ReturnType,nq} {Name,nq}")]
 public class MethodDescription(string? returnType, string name) : MemberDescription(name), IHaveAMethodBody
 {
+    [Newtonsoft.Json.JsonConstructor]
+    [JsonConstructor]
+    public MethodDescription(string? returnType, string name, List<Statement> statements)
+        : this(returnType, name)
+    {
+        this.Statements = statements ?? [];
+    }
+
     [DefaultValue("void")]
     public string ReturnType { get; } = returnType ?? "void";
 
