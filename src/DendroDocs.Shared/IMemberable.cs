@@ -6,6 +6,7 @@ public interface IMemberable : IHaveModifiers
     MemberType MemberType { get; }
 
     [Newtonsoft.Json.JsonProperty(Order = -3)]
+    [JsonPropertyOrder(-3)]
     string Name { get; }
 
     DocumentationCommentsDescription? DocumentationComments { get; internal set; }

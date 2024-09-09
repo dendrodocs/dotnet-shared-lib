@@ -13,6 +13,7 @@ public class MethodDescription(string? returnType, string name) : MemberDescript
         this.Statements = statements ?? [];
     }
 
+    [JsonPropertyOrder(10)]
     [DefaultValue("void")]
     public string ReturnType { get; } = returnType ?? "void";
 
@@ -20,6 +21,7 @@ public class MethodDescription(string? returnType, string name) : MemberDescript
     [Newtonsoft.Json.JsonConverter(typeof(ConcreteTypeConverter<List<ParameterDescription>>))]
     public List<ParameterDescription> Parameters { get; } = [];
 
+    [JsonPropertyOrder(10)]
     public List<Statement> Statements { get; } = [];
 
     [JsonIgnore]
