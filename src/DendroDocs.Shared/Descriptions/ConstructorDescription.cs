@@ -19,6 +19,7 @@ public class ConstructorDescription(string name) : MemberDescription(name), IHav
 
     public List<Statement> Statements { get; } = [];
 
+    [JsonIgnore]
     public override MemberType MemberType => MemberType.Constructor;
 
     [OnDeserialized]

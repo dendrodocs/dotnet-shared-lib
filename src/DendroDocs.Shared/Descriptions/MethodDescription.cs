@@ -22,6 +22,7 @@ public class MethodDescription(string? returnType, string name) : MemberDescript
 
     public List<Statement> Statements { get; } = [];
 
+    [JsonIgnore]
     public override MemberType MemberType => MemberType.Method;
 
     [OnDeserialized]

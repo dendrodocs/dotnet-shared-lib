@@ -10,5 +10,6 @@ public class FieldDescription(string type, string name) : MemberDescription(name
     [Newtonsoft.Json.JsonIgnore]
     public bool HasInitializer => this.Initializer is not null;
 
+    [JsonIgnore]
     public override MemberType MemberType => MemberType.Field;
 }
