@@ -64,9 +64,11 @@ public class TypeDescription(TypeType type, string? fullName) : IHaveModifiers
     public List<AttributeDescription> Attributes { get; } = [];
 
     [Newtonsoft.Json.JsonIgnore]
+    [JsonIgnore]
     public string Name => this.FullName.ClassName();
 
     [Newtonsoft.Json.JsonIgnore]
+    [JsonIgnore]
     public string Namespace => this.FullName.Namespace();
 
     [Newtonsoft.Json.JsonIgnore]
