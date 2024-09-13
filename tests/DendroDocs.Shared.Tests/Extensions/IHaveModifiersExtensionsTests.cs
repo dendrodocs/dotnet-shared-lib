@@ -1,5 +1,3 @@
-using DendroDocs.Descriptions;
-
 namespace DendroDocs.Extensions.Tests;
 
 [TestClass]
