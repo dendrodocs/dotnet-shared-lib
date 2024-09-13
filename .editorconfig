@@ -1,4 +1,6 @@
 # To learn more about .editorconfig see https://aka.ms/editorconfigdocs
+root = t
+
 ###############################
 # Core EditorConfig Options   #
 ###############################
@@ -8,11 +10,14 @@
 indent_style = space
 
 [*.{csproj,xml,runsettings}] 
+indent_style = space
 indent_size = 2
+tab_width = 2
 
 # Code files 
 [*.{cs,csx,vb,vbx}] 
 indent_size = 4
+tab_width = 4
 insert_final_newline = true
 charset = utf-8
 
@@ -21,6 +26,7 @@ charset = utf-8
 ###############################
 
 [*.{cs,vb}] 
+dotnet_style_namespace_match_folder = false
 # Organize usings 
 dotnet_sort_system_directives_first = true:warning
 # this. preferences 
