@@ -31,7 +31,7 @@ public class TypeDescriptionTests
     {
         // Arrange
         var description = new TypeDescription(type, "Namespace.Class");
-        var method = typeof(TypeDescription).GetMethod(methodName);
+        var method = typeof(TypeDescription).GetMethod(methodName) ?? throw new NotSupportedException($"Method {methodName} not found");
 
         // Act
         var result = (bool?)method.Invoke(description, null);

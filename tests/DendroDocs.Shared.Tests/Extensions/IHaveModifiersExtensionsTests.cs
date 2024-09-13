@@ -40,7 +40,7 @@ public partial class IHaveModifiersExtensionsTests
     [TestMethod]
     public void ModifierMethodsShouldReturnCorrectValues(string methodName, Modifier modifiers, bool expectation)
     {
-        var method = typeof(IHaveModifiersExtensions).GetMethods().Single(m => m.Name == methodName);
+        var method = typeof(IHaveModifiersExtensions).GetMethod(methodName) ?? throw new NotSupportedException($"Method {methodName} not found");
         var parameters = new[] { new Mod { Modifiers = modifiers } };
 
         // Act
