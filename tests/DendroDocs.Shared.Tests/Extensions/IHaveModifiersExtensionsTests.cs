@@ -44,9 +44,10 @@ public partial class IHaveModifiersExtensionsTests
         var parameters = new[] { new Mod { Modifiers = modifiers } };
 
         // Act
-        var result = (bool)method.Invoke(null, parameters);
+        var result = (bool?)method.Invoke(null, parameters);
 
         // Assert
+        result.Should().NotBeNull();
         result.Should().Be(expectation);
     }
 
