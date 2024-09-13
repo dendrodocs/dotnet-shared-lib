@@ -34,9 +34,10 @@ public class TypeDescriptionTests
         var method = typeof(TypeDescription).GetMethod(methodName);
 
         // Act
-        var result = (bool)method.Invoke(description, null);
+        var result = (bool?)method.Invoke(description, null);
 
         // Assert
+        result.Should().NotBeNull();
         result.Should().Be(expected);
     }
 
