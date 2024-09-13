@@ -24,7 +24,7 @@ public class SkipEmptyCollectionsContractResolver : DefaultContractResolver
         // This check return true if the collection contains items
         bool newShouldSerialize(object obj)
         {
-            return property.ValueProvider.GetValue(obj) is not ICollection collection || collection.Count > 0;
+            return property.ValueProvider?.GetValue(obj) is not ICollection collection || collection.Count > 0;
         }
 
         var originalShouldSerialize = property.ShouldSerialize;
