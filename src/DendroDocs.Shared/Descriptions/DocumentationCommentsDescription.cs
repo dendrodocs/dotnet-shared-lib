@@ -74,30 +74,30 @@ public partial class DocumentationCommentsDescription : IHaveDocumentationCommen
         {
             switch (section.Name.LocalName)
             {
-                case Section.Exception when !string.IsNullOrWhiteSpace(section.Attribute(Attribute.CRef).Value):
-                    this.Exceptions.Add(StripIDPrefix(section.Attribute(Attribute.CRef).Value), this.ParseSection(section));
+                case Section.Exception when !string.IsNullOrWhiteSpace(section.Attribute(Attribute.CRef)?.Value):
+                    this.Exceptions.Add(StripIDPrefix(section.Attribute(Attribute.CRef)?.Value), this.ParseSection(section));
                     break;
 
-                case Section.Param when !string.IsNullOrWhiteSpace(section.Attribute(Attribute.Name).Value):
-                    this.Params.Add(StripIDPrefix(section.Attribute(Attribute.Name).Value), this.ParseSection(section));
+                case Section.Param when !string.IsNullOrWhiteSpace(section.Attribute(Attribute.Name)?.Value):
+                    this.Params.Add(StripIDPrefix(section.Attribute(Attribute.Name)?.Value), this.ParseSection(section));
                     break;
 
-                case Section.Permission when !string.IsNullOrWhiteSpace(section.Attribute(Attribute.CRef).Value):
-                    this.Permissions.Add(StripIDPrefix(section.Attribute(Attribute.CRef).Value), this.ParseSection(section));
+                case Section.Permission when !string.IsNullOrWhiteSpace(section.Attribute(Attribute.CRef)?.Value):
+                    this.Permissions.Add(StripIDPrefix(section.Attribute(Attribute.CRef)?.Value), this.ParseSection(section));
                     break;
 
-                case Section.SeeAlso when !string.IsNullOrWhiteSpace(section.Attribute(Attribute.CRef).Value):
+                case Section.SeeAlso when !string.IsNullOrWhiteSpace(section.Attribute(Attribute.CRef)?.Value):
                     this.ProcessSeeAlsoTag(section, false);
                     break;
 
-                case Section.TypeParam when !string.IsNullOrWhiteSpace(section.Attribute(Attribute.Name).Value):
-                    this.TypeParams.Add(StripIDPrefix(section.Attribute(Attribute.Name).Value), this.ParseSection(section));
+                case Section.TypeParam when !string.IsNullOrWhiteSpace(section.Attribute(Attribute.Name)?.Value):
+                    this.TypeParams.Add(StripIDPrefix(section.Attribute(Attribute.Name)?.Value), this.ParseSection(section));
                     break;
             }
         }
     }
 
-    private string ParseSection(XElement section, bool removeNewLines = false)
+    private string ParseSection(XElement? section, bool removeNewLines = false)
     {
         if (section == null || section.IsEmpty)
         {
@@ -127,7 +127,7 @@ public partial class DocumentationCommentsDescription : IHaveDocumentationCommen
                     break;
 
                 case XElement element when (element.Name == Inline.ParamRef || element.Name == Inline.TypeParamRef) && element.Attribute(Attribute.Name) != null:
-                    ProcessInlineContent(contents, StripIDPrefix(element.Attribute(Attribute.Name).Value), removeNewLines);
+                    ProcessInlineContent(contents, StripIDPrefix(element.Attribute(Attribute.Name)?.Value), removeNewLines);
                     break;
 
                 case XElement element when element.Name == Inline.See:
@@ -239,7 +239,7 @@ public partial class DocumentationCommentsDescription : IHaveDocumentationCommen
 
     private static void ProcessInlineContent(StringBuilder stringBuilder, string text, bool removeNewLines)
     {
-        if (stringBuilder.Length > 0 && stringBuilder[stringBuilder.Length - 1] != ' ' && stringBuilder[stringBuilder.Length - 1] != '\n')
+        if (stringBuilder.Length > 0 && stringBuilder[^1] != ' ' && stringBuilder[^1] != '\n')
         {
             stringBuilder.Append(' ');
         }
@@ -256,7 +256,7 @@ public partial class DocumentationCommentsDescription : IHaveDocumentationCommen
 
     private void ProcessBlockContent(StringBuilder stringBuilder, XElement element)
     {
-        if (stringBuilder.Length > 0 && stringBuilder[stringBuilder.Length - 1] != '\n')
+        if (stringBuilder.Length > 0 && stringBuilder[^1] != '\n')
         {
             stringBuilder.Append('\n');
         }
@@ -267,7 +267,7 @@ public partial class DocumentationCommentsDescription : IHaveDocumentationCommen
 
     private void ProcessSeeAlsoTag(XElement element, bool removeNewLines)
     {
-        var key = StripIDPrefix(element.Attribute(Attribute.CRef).Value);
+        var key = StripIDPrefix(element.Attribute(Attribute.CRef)?.Value);
 
         var contents = new StringBuilder();
 
