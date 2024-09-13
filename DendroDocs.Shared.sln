@@ -1,29 +1,26 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
+# 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{6ECBE2C8-750A-4D07-983B-100274F50570}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DendroDocs.Shared", "src\DendroDocs.Shared\DendroDocs.Shared.csproj", "{ACFC5952-DEB1-41E0-A856-74A4DFA2308F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DendroDocs.Shared", "src\DendroDocs.Shared\DendroDocs.Shared.csproj", "{ACFC5952-DEB1-41E0-A856-74A4DFA2308F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{8226F042-7420-4930-BBB4-3F81D7108B5E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DendroDocs.Shared.Tests", "tests\DendroDocs.Shared.Tests\DendroDocs.Shared.Tests.csproj", "{46ACD655-A074-4C6E-A295-F46B9E55B4A0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DendroDocs.Shared.Tests", "tests\DendroDocs.Shared.Tests\DendroDocs.Shared.Tests.csproj", "{46ACD655-A074-4C6E-A295-F46B9E55B4A0}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "_build", "build\_build.csproj", "{00A0875F-E155-4C44-ADD4-4C4329C6C34C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_build", "_build", "{BD0D6AB0-756D-4594-B6E4-86B6C1B4AA70}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
-	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{00A0875F-E155-4C44-ADD4-4C4329C6C34C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{00A0875F-E155-4C44-ADD4-4C4329C6C34C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ACFC5952-DEB1-41E0-A856-74A4DFA2308F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{ACFC5952-DEB1-41E0-A856-74A4DFA2308F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ACFC5952-DEB1-41E0-A856-74A4DFA2308F}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -32,9 +29,18 @@ Global
 		{46ACD655-A074-4C6E-A295-F46B9E55B4A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{46ACD655-A074-4C6E-A295-F46B9E55B4A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{46ACD655-A074-4C6E-A295-F46B9E55B4A0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{00A0875F-E155-4C44-ADD4-4C4329C6C34C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{00A0875F-E155-4C44-ADD4-4C4329C6C34C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{ACFC5952-DEB1-41E0-A856-74A4DFA2308F} = {6ECBE2C8-750A-4D07-983B-100274F50570}
 		{46ACD655-A074-4C6E-A295-F46B9E55B4A0} = {8226F042-7420-4930-BBB4-3F81D7108B5E}
+		{00A0875F-E155-4C44-ADD4-4C4329C6C34C} = {BD0D6AB0-756D-4594-B6E4-86B6C1B4AA70}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {DD5B0BC4-80C1-46C0-A448-E2FF0F56F8A9}
 	EndGlobalSection
 EndGlobal
