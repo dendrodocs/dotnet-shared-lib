@@ -10,8 +10,12 @@ public partial class DocumentationCommentsDescription
 {
     [GeneratedRegex("(\\s{2,})", RegexOptions.ECMAScript)]
     private static partial Regex InlineWhitespace();
+
     [GeneratedRegex("^[NTFPME\\!]:", RegexOptions.ECMAScript)]
     private static partial Regex MemberIdPrefix();
+    
+    [GeneratedRegex("\\n\\s|\\s\\n", RegexOptions.Multiline)]
+    private static partial Regex TrimmedNewlineSpace();
 
     [DefaultValue("")]
     public string Example { get; set; } = string.Empty;
@@ -50,52 +54,43 @@ public partial class DocumentationCommentsDescription
 
         var documentation = new DocumentationCommentsDescription();
 
-        documentation.Example = documentation.ParseSection(element.Element(Section.Example));
-        documentation.Remarks = documentation.ParseSection(element.Element(Section.Remarks));
-        documentation.Returns = documentation.ParseSection(element.Element(Section.Returns));
-        documentation.Summary = documentation.ParseSection(element.Element(Section.Summary), true);
-        documentation.Value = documentation.ParseSection(element.Element(Section.Value));
-
-        documentation.ParseSection(element.Elements(Section.Exception));
-        documentation.ParseSection(element.Elements(Section.Param));
-        documentation.ParseSection(element.Elements(Section.Permission));
-        documentation.ParseSection(element.Elements(Section.SeeAlso));
-        documentation.ParseSection(element.Elements(Section.TypeParam));
+        documentation.ParseSections(element);
 
         return documentation;
     }
 
-    private void ParseSection(IEnumerable<XElement> sections)
+    private void ParseSections(XElement element)
     {
-        if (sections == null || !sections.Any())
-        {
-            return;
-        }
+        this.Example = this.ParseSection(element.Element(Section.Example));
+        this.Remarks = this.ParseSection(element.Element(Section.Remarks));
+        this.Returns = this.ParseSection(element.Element(Section.Returns));
+        this.Summary = this.ParseSection(element.Element(Section.Summary), true);
+        this.Value = this.ParseSection(element.Element(Section.Value));
 
+        this.ParseMultipleSections(element.Elements(Section.Exception), this.Exceptions, Attribute.CRef);
+        this.ParseMultipleSections(element.Elements(Section.Param), this.Params, Attribute.Name);
+        this.ParseMultipleSections(element.Elements(Section.Permission), this.Permissions, Attribute.CRef);
+        this.ParseMultipleSections(element.Elements(Section.TypeParam), this.TypeParams, Attribute.Name);
+        this.ParseSeeAlsos(element.Elements(Section.SeeAlso));
+    }
+
+    private void ParseMultipleSections(IEnumerable<XElement> sections, Dictionary<string, string> dictionary, string attributeName)
+    {
         foreach (var section in sections)
         {
-            switch (section.Name.LocalName)
+            var key = section.Attribute(attributeName)?.Value;
+            if (!string.IsNullOrWhiteSpace(key))
             {
-                case Section.Exception when !string.IsNullOrWhiteSpace(section.Attribute(Attribute.CRef)?.Value):
-                    this.Exceptions.Add(StripIDPrefix(section.Attribute(Attribute.CRef)?.Value), this.ParseSection(section));
-                    break;
-
-                case Section.Param when !string.IsNullOrWhiteSpace(section.Attribute(Attribute.Name)?.Value):
-                    this.Params.Add(StripIDPrefix(section.Attribute(Attribute.Name)?.Value), this.ParseSection(section));
-                    break;
-
-                case Section.Permission when !string.IsNullOrWhiteSpace(section.Attribute(Attribute.CRef)?.Value):
-                    this.Permissions.Add(StripIDPrefix(section.Attribute(Attribute.CRef)?.Value), this.ParseSection(section));
-                    break;
-
-                case Section.SeeAlso when !string.IsNullOrWhiteSpace(section.Attribute(Attribute.CRef)?.Value):
-                    this.ProcessSeeAlsoTag(section, false);
-                    break;
-
-                case Section.TypeParam when !string.IsNullOrWhiteSpace(section.Attribute(Attribute.Name)?.Value):
-                    this.TypeParams.Add(StripIDPrefix(section.Attribute(Attribute.Name)?.Value), this.ParseSection(section));
-                    break;
+                dictionary[StripIDPrefix(key)] = this.ParseSection(section);
             }
+        }
+    }
+
+    private void ParseSeeAlsos(IEnumerable<XElement> sections)
+    {
+        foreach (var section in sections)
+        {
+            this.ProcessSeeAlsoTag(section, false);
         }
     }
 
@@ -110,145 +105,140 @@ public partial class DocumentationCommentsDescription
 
         foreach (var node in section.Nodes())
         {
-            switch (node)
-            {
-                case XText text:
-                    ProcessInlineContent(contents, text.Value, removeNewLines);
-                    break;
-
-                case XElement element when element.Name == Block.Code || element.Name == Block.Para:
-                    this.ProcessBlockContent(contents, element);
-                    break;
-
-                case XElement element when element.Name == Block.List:
-                    this.ProcessListContent(contents, element);
-                    break;
-
-                case XElement element when element.Name == Inline.C:
-                    ProcessInlineContent(contents, element.Value, removeNewLines);
-                    break;
-
-                case XElement element when (element.Name == Inline.ParamRef || element.Name == Inline.TypeParamRef) && element.Attribute(Attribute.Name) != null:
-                    ProcessInlineContent(contents, StripIDPrefix(element.Attribute(Attribute.Name)?.Value), removeNewLines);
-                    break;
-
-                case XElement element when element.Name == Inline.See:
-                    ProcessInlineContent(contents, element.IsEmpty ? StripIDPrefix(element.Attribute(Attribute.CRef)?.Value) : element.Value, removeNewLines);
-                    break;
-
-                case XElement element when element.Name == Section.SeeAlso:
-                    this.ProcessSeeAlsoTag(element, removeNewLines);
-                    break;
-
-                case XElement element when !element.IsEmpty:
-                    ProcessInlineContent(contents, element.Value, removeNewLines);
-                    break;
-            }
+            this.ProcessNode(node, contents, removeNewLines);
         }
 
-        return contents.ToString().Trim();
+        return TrimmedNewlineSpace()
+            .Replace(contents.ToString(), "\n")
+            .Trim();
+    }
+
+    private void ProcessNode(XNode node, StringBuilder contents, bool removeNewLines)
+    {
+        switch (node)
+        {
+            case XText text:
+                ProcessInlineContent(contents, text.Value, removeNewLines);
+                break;
+            case XElement element:
+                this.ProcessElementNode(element, contents, removeNewLines);
+                break;
+            default:
+                // Ignore other node types
+                break;
+        }
+    }
+
+    private void ProcessElementNode(XElement element, StringBuilder contents, bool removeNewLines)
+    {
+        switch (element.Name.LocalName)
+        {
+            case Block.Code or Block.Para:
+                this.ProcessBlockContent(contents, element);
+                break;
+            case Block.List:
+                this.ProcessListContent(contents, element);
+                break;
+            case Inline.C:
+                ProcessInlineContent(contents, element.Value, removeNewLines);
+                break;
+            case Inline.ParamRef or Inline.TypeParamRef:
+                ProcessInlineContent(contents, StripIDPrefix(element.Attribute(Attribute.Name)?.Value), removeNewLines);
+                break;
+            case Inline.See:
+                ProcessInlineContent(contents, element.IsEmpty ? StripIDPrefix(element.Attribute(Attribute.CRef)?.Value) : element.Value, removeNewLines);
+                break;
+            case Section.SeeAlso:
+                contents.Append(this.ProcessSeeAlsoTag(element, removeNewLines));
+                break;
+            default:
+                if (!element.IsEmpty) ProcessInlineContent(contents, element.Value, removeNewLines);
+                break;
+        }
     }
 
     private void ProcessListContent(StringBuilder contents, XElement element)
     {
-        var listType = element.Attribute(Attribute.Type)?.Value;
+        contents.Append('\n');
+
+        var listType = element.Attribute(Attribute.Type)?.Value ?? ListType.Definition;
         switch (listType)
         {
             case ListType.Bullet:
-                foreach (var item in element.Elements(List.Item))
-                {
-                    var term = this.ParseSection(item.Element(List.Term));
-                    var description = this.ParseSection(item.Element(List.Description));
-
-                    contents.Append("* ");
-
-                    if (!string.IsNullOrEmpty(term))
-                    {
-                        contents.Append(term);
-                        contents.Append(" - ");
-                    }
-
-                    if (!string.IsNullOrEmpty(description))
-                    {
-                        contents.Append(description);
-                    }
-
-                    if (string.IsNullOrEmpty(term) && string.IsNullOrEmpty(description))
-                    {
-                        contents.Append(item.Value.Trim());
-                    }
-
-                    contents.Append('\n');
-
-                }
+                this.ProcessBulletList(contents, element);
                 break;
-
             case ListType.Number:
-                if (!int.TryParse(element.Attribute(Attribute.Start)?.Value.Trim() ?? "1", out var startIndex))
-                {
-                    startIndex = 1;
-                }
-
-                foreach (var item in element.Elements(List.Item))
-                {
-                    var term = this.ParseSection(item.Element(List.Term));
-                    var description = this.ParseSection(item.Element(List.Description));
-
-                    contents.Append(startIndex);
-                    contents.Append(". ");
-
-                    if (!string.IsNullOrEmpty(term))
-                    {
-                        contents.Append(term);
-                        contents.Append(" - ");
-                    }
-
-                    if (!string.IsNullOrEmpty(description))
-                    {
-                        contents.Append(description);
-                    }
-
-                    if (string.IsNullOrEmpty(term) && string.IsNullOrEmpty(description))
-                    {
-                        contents.Append(item.Value.Trim());
-                    }
-
-                    contents.Append('\n');
-
-                    startIndex++;
-                }
+                this.ProcessNumberedList(contents, element);
                 break;
-
             case ListType.Definition:
-                foreach (var item in element.Elements(List.Item))
-                {
-                    var term = this.ParseSection(item.Element(List.Term));
-                    var description = this.ParseSection(item.Element(List.Description));
-
-                    contents.Append(term);
-                    contents.Append('\n');
-                    contents.Append(new string(' ', 4));
-                    contents.Append(description);
-                    contents.Append('\n');
-                }
-                break;
-
-            default:
-                contents.Append(string.Join(" ", element.Descendants().Select(e => this.ParseSection(e))));
+                this.ProcessDefinitionList(contents, element);
                 break;
         }
     }
 
-    private static void ProcessInlineContent(StringBuilder stringBuilder, string text, bool removeNewLines)
+    private void ProcessBulletList(StringBuilder contents, XElement element)
     {
-        if (stringBuilder.Length > 0 && stringBuilder[^1] != ' ' && stringBuilder[^1] != '\n')
+        foreach (var item in element.Elements(List.Item))
         {
-            stringBuilder.Append(' ');
+            this.AppendListItem(contents, "* ", item);
+        }
+    }
+
+    private void ProcessNumberedList(StringBuilder contents, XElement element)
+    {
+        var startIndex = int.TryParse(element.Attribute(Attribute.Start)?.Value, out var result) ? result : 1;
+
+        foreach (var item in element.Elements(List.Item))
+        {
+            this.AppendListItem(contents, $"{startIndex++}. ", item);
+        }
+    }
+
+    private void ProcessDefinitionList(StringBuilder contents, XElement element)
+    {
+        foreach (var item in element.Elements(List.Item))
+        {
+            var term = this.ParseSection(item.Element(List.Term));
+            var description = this.ParseSection(item.Element(List.Description));
+
+            contents.Append(term);
+            contents.Append(" — ");
+            contents.Append(description);
+            contents.Append('\n');
+        }
+    }
+
+    private void AppendListItem(StringBuilder contents, string prefix, XElement item)
+    {
+        var term = this.ParseSection(item.Element(List.Term));
+        var description = this.ParseSection(item.Element(List.Description));
+
+        contents.Append(prefix);
+
+        if (!string.IsNullOrEmpty(term))
+        {
+            contents.Append(term);
+            contents.Append(" - ");
         }
 
+        if (!string.IsNullOrEmpty(description))
+        {
+            contents.Append(description);
+        }
+
+        if (string.IsNullOrEmpty(term) && string.IsNullOrEmpty(description))
+        {
+            contents.Append(item.Value.Trim());
+        }
+
+        contents.Append('\n');
+    }
+
+    private static void ProcessInlineContent(StringBuilder stringBuilder, string text, bool removeNewLines)
+    {
         if (removeNewLines)
         {
-            stringBuilder.Append(InlineWhitespace().Replace(text, " ").Trim());
+            stringBuilder.Append(InlineWhitespace().Replace(text, " "));
         }
         else
         {
@@ -258,16 +248,12 @@ public partial class DocumentationCommentsDescription
 
     private void ProcessBlockContent(StringBuilder stringBuilder, XElement element)
     {
-        if (stringBuilder.Length > 0 && stringBuilder[^1] != '\n')
-        {
-            stringBuilder.Append('\n');
-        }
-
+        stringBuilder.Append('\n');
         stringBuilder.Append(this.ParseSection(element));
         stringBuilder.Append('\n');
     }
 
-    private void ProcessSeeAlsoTag(XElement element, bool removeNewLines)
+    private string ProcessSeeAlsoTag(XElement element, bool removeNewLines)
     {
         var key = StripIDPrefix(element.Attribute(Attribute.CRef)?.Value);
 
@@ -277,7 +263,9 @@ public partial class DocumentationCommentsDescription
 
         var value = contents.ToString().Trim();
 
-        this.SeeAlsos.Add(key, !string.IsNullOrEmpty(value) ? value : key);
+        this.SeeAlsos[key] = !string.IsNullOrEmpty(value) ? value : key;
+
+        return this.SeeAlsos[key];
     }
 
     private static string StripIDPrefix(string? value)
