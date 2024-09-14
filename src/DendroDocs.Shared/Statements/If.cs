@@ -1,7 +1,7 @@
 namespace DendroDocs;
 
 [DebuggerDisplay("If")]
-public class If : Statement
+public class If : Statement, IJsonOnDeserialized
 {
     public List<IfElseSection> Sections { get; } = [];
 
@@ -11,6 +11,11 @@ public class If : Statement
 
     [OnDeserialized]
     internal new void OnDeserializedMethod(StreamingContext context)
+    {
+         this.OnDeserialized();
+    }
+
+    public new void OnDeserialized()
     {
         foreach (var section in this.Sections)
         {

@@ -1,7 +1,7 @@
 namespace DendroDocs;
 
 [DebuggerDisplay("Switch {Expression}")]
-public class Switch : Statement
+public class Switch : Statement, IJsonOnDeserialized
 {
     public List<SwitchSection> Sections { get; } = [];
 
@@ -13,6 +13,11 @@ public class Switch : Statement
 
     [OnDeserialized]
     internal new void OnDeserializedMethod(StreamingContext context)
+    {
+        this.OnDeserialized();
+    }
+
+    public new void OnDeserialized()
     {
         foreach (var section in this.Sections)
         {

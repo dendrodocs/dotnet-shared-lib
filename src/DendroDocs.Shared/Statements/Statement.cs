@@ -8,7 +8,7 @@ namespace DendroDocs;
 [JsonDerivedType(typeof(InvocationDescription), typeDiscriminator: "DendroDocs.InvocationDescription, DendroDocs.Shared")]
 [JsonDerivedType(typeof(ReturnDescription), typeDiscriminator: "DendroDocs.ReturnDescription, DendroDocs.Shared")]
 [JsonDerivedType(typeof(AssignmentDescription), typeDiscriminator: "DendroDocs.AssignmentDescription, DendroDocs.Shared")]
-public abstract class Statement
+public abstract class Statement : IJsonOnDeserialized
 {
     [Newtonsoft.Json.JsonProperty(ItemTypeNameHandling = Newtonsoft.Json.TypeNameHandling.Objects)]
     public virtual List<Statement> Statements { get; } = [];
@@ -22,6 +22,11 @@ public abstract class Statement
 
     [OnDeserialized]
     internal void OnDeserializedMethod(StreamingContext context)
+    {
+        this.OnDeserialized();
+    }
+
+    public void OnDeserialized()
     {
         foreach (var statement in this.Statements)
         {
