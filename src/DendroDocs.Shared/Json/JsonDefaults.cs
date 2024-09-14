@@ -106,8 +106,15 @@ public static class JsonDefaults
         // Process only if typeInfo represents an object
         if (typeInfo.Kind != JsonTypeInfoKind.Object) return;
 
-        // Set default values if necessary
-        typeInfo.OnDeserialized = SetDefaultValues;
+        // Preserve original OnDeserializing method
+        var originalOnDeserializing = typeInfo.OnDeserializing;
+        typeInfo.OnDeserializing = (obj) =>
+        {
+            originalOnDeserializing?.Invoke(obj);
+
+            // Set default values for properties with DefaultValueAttribute
+            SetDefaultValues(obj);
+        };
 
         void SetDefaultValues(object obj)
         {
@@ -115,28 +122,15 @@ public static class JsonDefaults
             {
                 var reflectedProperty = typeInfo.Type.GetProperty(property.Name)!;
                 var defaultValueAttribute = reflectedProperty.GetCustomAttribute<DefaultValueAttribute>();
-
-                if (defaultValueAttribute is not null && Equals(reflectedProperty.GetValue(obj), GetDefault(property.PropertyType)))
+                if (defaultValueAttribute is not null)
                 {
+                    // Check if not already set, e.g. by a property initializer
+                    if (!Equals(reflectedProperty.GetValue(obj), defaultValueAttribute.Value))
+                    {
                     reflectedProperty.SetValue(obj, defaultValueAttribute.Value);
                 }
             }
+            }
         }
-
-        static IEnumerable<MethodInfo> OnDeserializedMethods(JsonTypeInfo typeInfo) =>
-            typeInfo.Type.GetMethods(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public)
-                .Where(m => m.GetCustomAttribute<OnDeserializedAttribute>() is not null &&
-                            m.GetParameters().Length == 1 &&
-                            m.GetParameters()[0].ParameterType == typeof(StreamingContext));
     }
-
-    // Get the default value for a type at runtime
-    private static object? GetDefault(Type type)
-    {
-        var genericDefault = GetDefault<object>;
-
-        return genericDefault.Method.GetGenericMethodDefinition().MakeGenericMethod(type).Invoke(default, default);
-    }
-
-    private static T? GetDefault<T>() => default;
 }
