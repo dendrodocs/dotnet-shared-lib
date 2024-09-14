@@ -109,28 +109,6 @@ public static class JsonDefaults
         // Set default values if necessary
         typeInfo.OnDeserialized = SetDefaultValues;
 
-        // If the type implements relevant interfaces, handle OnDeserialized methods
-        if (typeInfo.Type.IsAssignableTo(typeof(Statement)) || typeInfo.Type.IsAssignableTo(typeof(IHaveAMethodBody)))
-        {
-            var deserializedMethods = OnDeserializedMethods(typeInfo).ToList();
-            if (deserializedMethods.Count > 0)
-            {
-                var originalOnDeserialized = typeInfo.OnDeserialized;
-
-                typeInfo.OnDeserialized = obj =>
-                {
-                    // Call original callback if it exists
-                    originalOnDeserialized?.Invoke(obj);
-
-                    // Call the OnDeserialized methods
-                    foreach (var method in deserializedMethods)
-                    {
-                        method.Invoke(obj, [new StreamingContext()]);
-                    }
-                };
-            }
-        }
-
         void SetDefaultValues(object obj)
         {
             foreach (var property in typeInfo.Properties)

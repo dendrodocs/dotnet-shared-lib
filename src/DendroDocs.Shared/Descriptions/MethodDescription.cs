@@ -3,7 +3,7 @@ using DendroDocs.Json;
 namespace DendroDocs;
 
 [DebuggerDisplay("Method {ReturnType,nq} {Name,nq}")]
-public class MethodDescription(string? returnType, string name) : MemberDescription(name), IHaveAMethodBody
+public class MethodDescription(string? returnType, string name) : MemberDescription(name), IHaveAMethodBody, IJsonOnDeserialized
 {
     [Newtonsoft.Json.JsonConstructor]
     [JsonConstructor]
@@ -29,6 +29,11 @@ public class MethodDescription(string? returnType, string name) : MemberDescript
 
     [OnDeserialized]
     internal void OnDeserializedMethod(StreamingContext context)
+    {
+        this.OnDeserialized();
+    }
+
+    public void OnDeserialized()
     {
         foreach (var statement in this.Statements)
         {
