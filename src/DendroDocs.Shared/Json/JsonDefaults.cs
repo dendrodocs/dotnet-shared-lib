@@ -77,15 +77,14 @@ public static class JsonDefaults
 
         static void SetShouldSerializeBasedOnCollection(JsonPropertyInfo property)
         {
-            // Only serialize read-only collections if they have items
             if (property.PropertyType.IsGenericType && property.PropertyType.GetGenericTypeDefinition() == typeof(IReadOnlyList<>))
             {
+                // Only serialize read-only collections if they have items
                 property.ShouldSerialize = (_, value) => value is IReadOnlyCollection<object> collection && collection.Count > 0;
             }
-
-            // Only serialize collections if they have items
             else if (typeof(ICollection).IsAssignableFrom(property.PropertyType))
             {
+                // Only serialize collections if they have items
                 property.ShouldSerialize = (_, value) => value is ICollection collection && collection.Count > 0;
             }
         }
@@ -127,9 +126,9 @@ public static class JsonDefaults
                     // Check if not already set, e.g. by a property initializer
                     if (!Equals(reflectedProperty.GetValue(obj), defaultValueAttribute.Value))
                     {
-                    reflectedProperty.SetValue(obj, defaultValueAttribute.Value);
+                        reflectedProperty.SetValue(obj, defaultValueAttribute.Value);
+                    }
                 }
-            }
             }
         }
     }
