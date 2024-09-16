@@ -362,7 +362,7 @@ public class DocumentationCommentsDescriptionTests
     }
 
     [TestMethod]
-    public void ParseShouldHandleListWithoutListStyleAsDefinitionList()
+    public void ParseShouldHandleListWithoutListStyleButWithTermsAndDescriptionAsDefinitionList()
     {
         // Arrange
         string validXml =
@@ -384,6 +384,33 @@ public class DocumentationCommentsDescriptionTests
 
         // Assert
         result.Summary.Should().Be("Item 1 — Description 1");
+    }
+
+    [TestMethod]
+    public void ParseShouldHandleListWithoutListStyleNotItemOrDescriptionAsParagraphs()
+    {
+        // Arrange
+        string validXml =
+            """
+            <doc>
+                <summary>
+                    <list>
+                        <item>First item</item>
+                        <item>Second item</item>
+                    </list>
+                </summary>
+            </doc>
+            """;
+
+        // Act
+        var result = DocumentationCommentsDescription.Parse(validXml)!;
+
+        // Assert
+        result.Summary.Should().Be(
+            """
+            First item
+            Second item
+            """.UseUnixNewLine());
     }
 
     [TestMethod]
@@ -717,7 +744,7 @@ public class DocumentationCommentsDescriptionTests
     }
 
     [TestMethod]
-    public void ParseShouldHandleSummaryWithUnknownSelfClosingElementWithoutContent()
+    public void ParseShouldHandleSummaryWithUnknownSelfClosingElementWithoutContentAsWhitespace()
     {
         // Arrange
         string validXml =
@@ -733,7 +760,7 @@ public class DocumentationCommentsDescriptionTests
         var result = DocumentationCommentsDescription.Parse(validXml)!;
 
         // Assert
-        result.Summary.Should().Be("This text includes a self-closing element: .");
+        result.Summary.Should().Be("This text includes a self-closing element:.");
     }
 
     [TestMethod]
@@ -754,5 +781,116 @@ public class DocumentationCommentsDescriptionTests
 
         // Assert
         result.Summary.Should().Be("Some text.");
+    }
+
+    [TestMethod]
+    public void ParseShouldKeepNewLinesInExamples()
+    {
+        // Arrange
+        string validXml =
+            """
+            <doc>
+                <example>
+                The following example demonstrates the use of this method.
+
+                <code>
+                // Get a new random number
+                SampleClass sc = new SampleClass(10);
+
+                int random = sc.GetRandomNumber();
+
+                Console.WriteLine("Random value: {0}", random);
+                </code>
+                </example>
+            </doc>
+            """;
+
+        // Act
+        var result = DocumentationCommentsDescription.Parse(validXml)!;
+
+        // Assert
+        result.Example.Should().Be(
+            """
+            The following example demonstrates the use of this method.
+
+            // Get a new random number
+            SampleClass sc = new SampleClass(10);
+
+            int random = sc.GetRandomNumber();
+
+            Console.WriteLine("Random value: {0}", random);
+            """.UseUnixNewLine());
+    }
+
+    [TestMethod]
+    public void ParseShouldKeepNewLinesButTrimSpacesInRemarks()
+    {
+        // Arrange
+        string validXml =
+            """
+            <doc>
+                <remarks>
+                  A
+                  B
+                </remarks>
+            </doc>
+            """;
+
+        // Act
+        var result = DocumentationCommentsDescription.Parse(validXml)!;
+
+        // Assert
+        result.Remarks.Should().Be(
+            """
+            A
+            B
+            """.UseUnixNewLine());
+    }
+
+    [TestMethod]
+    public void ParseShouldHandleNestedInlineElementsCorrectly()
+    {
+        // Arrange
+        string validXml =
+            """
+            <doc>
+                <summary>
+                This is a summary with mixed content.
+                <para>A <see cref="System.Object">paragraph</see></para>
+                <para>Another <paramref name="paragraph"/></para>
+                <list type="definition">
+                <item>
+                <term>Term 1</term>
+                <description>First <typeparamref name="item"/></description>
+                </item>
+                <item>
+                <term>Term <c>2</c></term>
+                <description><para>Second item</para></description>
+                </item>
+                </list>
+                <code>
+                class ACodeSample { }
+                </code>
+                More text <c>null</c> and more text
+                <seealso cref="System.Object"/>
+            </summary>
+            
+            </doc>
+            """;
+
+        // Act
+        var result = DocumentationCommentsDescription.Parse(validXml)!;
+
+        // Assert
+        result.Summary.Should().Be(
+            """
+            This is a summary with mixed content.
+            A paragraph
+            Another paragraph
+            Term 1 — First item
+            Term 2 — Second item
+            class ACodeSample { }
+            More text null and more text System.Object
+            """.UseUnixNewLine());
     }
 }
