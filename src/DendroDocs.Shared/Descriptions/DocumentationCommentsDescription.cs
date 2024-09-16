@@ -272,7 +272,7 @@ public partial class DocumentationCommentsDescription
         }
     }
 
-    private string ProcessSeeAlsoTag(StringBuilder contents, XElement element, bool removeNewLines)
+    private void ProcessSeeAlsoTag(StringBuilder contents, XElement element, bool removeNewLines)
     {
         var key = StripIDPrefix(element.Attribute(Attribute.CRef)?.Value);
 
@@ -282,9 +282,16 @@ public partial class DocumentationCommentsDescription
 
         // Get the contents added to the StringBuilder in the ProcessInlineContent method
         var value = contents.ToString(previousLength, contents.Length - previousLength);
-        this.SeeAlsos[key] = !string.IsNullOrEmpty(value) ? value : key;
 
-        return this.SeeAlsos[key];
+        if (string.IsNullOrWhiteSpace(value))
+        {
+            this.SeeAlsos[key] = key;
+            contents.Append(key);
+        }
+        else
+        {
+            this.SeeAlsos[key] = value;
+        }
     }
 
     private static string StripIDPrefix(string? value)
