@@ -1,4 +1,4 @@
-namespace DendroDocs.Descriptions.Tests;
+namespace DendroDocs.Tests;
 
 [TestClass]
 public class DocumentationCommentsDescriptionTests
@@ -256,7 +256,11 @@ public class DocumentationCommentsDescriptionTests
         var result = DocumentationCommentsDescription.Parse(validXml)!;
 
         // Assert
-        result.Summary.Should().Be("* Item 1 - Description 1\n* Item 2 - Description 2");
+        result.Summary.Should().Be(
+            """
+            * Item 1 - Description 1
+            * Item 2 - Description 2
+            """.UseUnixNewLine());
     }
 
     [TestMethod]
@@ -285,7 +289,11 @@ public class DocumentationCommentsDescriptionTests
         var result = DocumentationCommentsDescription.Parse(validXml)!;
 
         // Assert
-        result.Summary.Should().Be("1. Step 1 - Description 1\n2. Step 2 - Description 2");
+        result.Summary.Should().Be(
+            """
+            1. Step 1 - Description 1
+            2. Step 2 - Description 2
+            """.UseUnixNewLine());
     }
 
     [TestMethod]
@@ -314,7 +322,11 @@ public class DocumentationCommentsDescriptionTests
         var result = DocumentationCommentsDescription.Parse(validXml)!;
 
         // Assert
-        result.Summary.Should().Be("5. Step 1 - Description 1\n6. Step 2 - Description 2");
+        result.Summary.Should().Be(
+            """
+            5. Step 1 - Description 1
+            6. Step 2 - Description 2
+            """.UseUnixNewLine());
     }
 
     [TestMethod]
@@ -343,7 +355,10 @@ public class DocumentationCommentsDescriptionTests
         var result = DocumentationCommentsDescription.Parse(validXml)!;
 
         // Assert
-        result.Summary.Should().Be("Term 1 — Description 1\nTerm 2 — Description 2");
+        result.Summary.Should().Be("""
+            Term 1 — Description 1
+            Term 2 — Description 2
+            """.UseUnixNewLine());
     }
 
     [TestMethod]
@@ -417,7 +432,12 @@ public class DocumentationCommentsDescriptionTests
         var result = DocumentationCommentsDescription.Parse(validXml)!;
 
         // Assert
-        result.Summary.Should().Be("This is regular content.\n* Item 1 - Description 1\nThis is content after the list.");
+        result.Summary.Should().Be(
+            """
+            This is regular content.
+            * Item 1 - Description 1
+            This is content after the list.
+            """.UseUnixNewLine());
     }
 
     [TestMethod]
@@ -456,7 +476,11 @@ public class DocumentationCommentsDescriptionTests
         var result = DocumentationCommentsDescription.Parse(validXml)!;
 
         // Assert
-        result.Summary.Should().Be("This is the first paragraph.\nThis is the second paragraph.");
+        result.Summary.Should().Be(
+            """
+            This is the first paragraph.
+            This is the second paragraph.
+            """.UseUnixNewLine());
     }
 
     [TestMethod]
@@ -471,6 +495,7 @@ public class DocumentationCommentsDescriptionTests
                     <code>
                     var x = 10;
                     var y = 20;
+
                     var sum = x + y;
                     </code>
                 </summary>
@@ -481,7 +506,14 @@ public class DocumentationCommentsDescriptionTests
         var result = DocumentationCommentsDescription.Parse(validXml)!;
 
         // Assert
-        result.Summary.Should().Be("Here is an example:\nvar x = 10;\nvar y = 20;\nvar sum = x + y;");
+        result.Summary.Should().Be(
+            """
+            Here is an example:
+            var x = 10;
+            var y = 20;
+
+            var sum = x + y;
+            """.UseUnixNewLine());
     }
 
     [TestMethod]
