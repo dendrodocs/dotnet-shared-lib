@@ -1,5 +1,5 @@
 # To learn more about .editorconfig see https://aka.ms/editorconfigdocs
-root = t
+root = true
 
 ###############################
 # Core EditorConfig Options   #
