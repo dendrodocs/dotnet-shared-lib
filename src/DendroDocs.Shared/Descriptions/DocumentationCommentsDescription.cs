@@ -199,17 +199,11 @@ public partial class DocumentationCommentsDescription
     {
         foreach (var item in element.Elements(List.Item))
         {
-            var term = this.ParseSection(item.Element(List.Term));
-            var description = this.ParseSection(item.Element(List.Description));
-
-            contents.Append(term);
-            contents.Append(" — ");
-            contents.Append(description);
-            contents.Append('\n');
+            this.AppendListItem(contents, string.Empty, item, '—');
         }
     }
 
-    private void AppendListItem(StringBuilder contents, string prefix, XElement item)
+    private void AppendListItem(StringBuilder contents, string prefix, XElement item, char dash = '-')
     {
         var term = this.ParseSection(item.Element(List.Term));
         var description = this.ParseSection(item.Element(List.Description));
@@ -219,7 +213,9 @@ public partial class DocumentationCommentsDescription
         if (!string.IsNullOrEmpty(term))
         {
             contents.Append(term);
-            contents.Append(" - ");
+            contents.Append(' ');
+            contents.Append(dash);
+            contents.Append(' ');
         }
 
         if (!string.IsNullOrEmpty(description))
