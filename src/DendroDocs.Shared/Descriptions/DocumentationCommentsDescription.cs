@@ -13,9 +13,9 @@ public partial class DocumentationCommentsDescription
 
     [GeneratedRegex("^[NTFPME\\!]:", RegexOptions.ECMAScript)]
     private static partial Regex MemberIdPrefix();
-    
-    [GeneratedRegex("\\n\\s|\\s\\n", RegexOptions.Multiline)]
-    private static partial Regex TrimmedNewlineSpace();
+
+    [GeneratedRegex(@"^\W", RegexOptions.ECMAScript)]
+    private static partial Regex WordBoundary();
 
     [DefaultValue("")]
     public string Example { get; set; } = string.Empty;
@@ -90,7 +90,7 @@ public partial class DocumentationCommentsDescription
     {
         foreach (var section in sections)
         {
-            this.ProcessSeeAlsoTag(section, false);
+            this.ProcessSeeAlsoTag(new StringBuilder(), section, false);
         }
     }
 
@@ -108,9 +108,7 @@ public partial class DocumentationCommentsDescription
             this.ProcessNode(node, contents, removeNewLines);
         }
 
-        return TrimmedNewlineSpace()
-            .Replace(contents.ToString(), "\n")
-            .Trim();
+        return contents.ToString().Trim();
     }
 
     private void ProcessNode(XNode node, StringBuilder contents, bool removeNewLines)
@@ -149,7 +147,7 @@ public partial class DocumentationCommentsDescription
                 ProcessInlineContent(contents, element.IsEmpty ? StripIDPrefix(element.Attribute(Attribute.CRef)?.Value) : element.Value, removeNewLines);
                 break;
             case Section.SeeAlso:
-                contents.Append(this.ProcessSeeAlsoTag(element, removeNewLines));
+                this.ProcessSeeAlsoTag(contents, element, removeNewLines);
                 break;
             default:
                 if (!element.IsEmpty) ProcessInlineContent(contents, element.Value, removeNewLines);
@@ -159,7 +157,10 @@ public partial class DocumentationCommentsDescription
 
     private void ProcessListContent(StringBuilder contents, XElement element)
     {
-        contents.Append('\n');
+        if (contents.Length > 0 && contents[^1] != '\n')
+        {
+            contents.Append('\n');
+        }
 
         var listType = element.Attribute(Attribute.Type)?.Value ?? ListType.Definition;
         switch (listType)
@@ -236,9 +237,17 @@ public partial class DocumentationCommentsDescription
 
     private static void ProcessInlineContent(StringBuilder stringBuilder, string text, bool removeNewLines)
     {
+        text = text.TrimStart();
+
+        // Only add space if the previous character is not a newline and the text doesn't start with punctuation
+        if (ShouldAddSpace(stringBuilder, text))
+        {
+            stringBuilder.Append(' ');
+        }
+        
         if (removeNewLines)
         {
-            stringBuilder.Append(InlineWhitespace().Replace(text, " "));
+            stringBuilder.Append(InlineWhitespace().Replace(text, " ").Trim());
         }
         else
         {
@@ -246,23 +255,37 @@ public partial class DocumentationCommentsDescription
         }
     }
 
-    private void ProcessBlockContent(StringBuilder stringBuilder, XElement element)
+    private static bool ShouldAddSpace(StringBuilder stringBuilder, string text)
     {
-        stringBuilder.Append('\n');
-        stringBuilder.Append(this.ParseSection(element));
-        stringBuilder.Append('\n');
+        // Add a space only if the last character in the string builder is not a newline or punctuation, and the next text doesn't start with punctuation
+        return stringBuilder.Length > 0 && stringBuilder[^1] != '\n' && !WordBoundary().IsMatch(text);
     }
 
-    private string ProcessSeeAlsoTag(XElement element, bool removeNewLines)
+    private void ProcessBlockContent(StringBuilder stringBuilder, XElement element)
+    {
+        if (stringBuilder.Length > 0 && stringBuilder[^1] != '\n')
+        {
+            stringBuilder.Append('\n');
+        }
+
+        stringBuilder.Append(this.ParseSection(element));
+
+        if (stringBuilder[^1] != '\n')
+        {
+            stringBuilder.Append('\n');
+        }
+    }
+
+    private string ProcessSeeAlsoTag(StringBuilder contents, XElement element, bool removeNewLines)
     {
         var key = StripIDPrefix(element.Attribute(Attribute.CRef)?.Value);
 
-        var contents = new StringBuilder();
+        var previousLength = contents.Length;
 
         ProcessInlineContent(contents, element.Value, removeNewLines);
 
-        var value = contents.ToString().Trim();
-
+        // Get the contents added to the StringBuilder in the ProcessInlineContent method
+        var value = contents.ToString(previousLength, contents.Length - previousLength);
         this.SeeAlsos[key] = !string.IsNullOrEmpty(value) ? value : key;
 
         return this.SeeAlsos[key];
