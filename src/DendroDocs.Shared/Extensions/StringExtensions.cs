@@ -11,7 +11,7 @@ public static class StringExtensions
             return string.Empty;
         }
 
-        return fullName.Substring(Math.Min(fullName.LastIndexOf(Dot) + 1, fullName.Length));
+        return fullName[Math.Min(fullName.LastIndexOf(Dot) + 1, fullName.Length)..];
     }
 
     public static string Namespace(this string fullName)
@@ -21,7 +21,7 @@ public static class StringExtensions
             return string.Empty;
         }
 
-        return fullName.Substring(0, Math.Max(fullName.LastIndexOf(Dot), 0)).Trim(Dot);
+        return fullName[..Math.Max(fullName.LastIndexOf(Dot), 0)].Trim(Dot);
     }
 
     public static IReadOnlyList<string> NamespaceParts(this string fullName)
@@ -31,6 +31,6 @@ public static class StringExtensions
             return [];
         }
 
-        return fullName.Split([Dot], StringSplitOptions.RemoveEmptyEntries);
+        return fullName.Split(Dot, StringSplitOptions.RemoveEmptyEntries);
     }
 }
