@@ -10,11 +10,11 @@ public class FieldDescriptionTests
         var description = new FieldDescription("Type", "Name");
 
         // Assert
-        description.MemberType.Should().Be(MemberType.Field);
-        description.IsInherited.Should().BeFalse();
-        description.Type.Should().Be("Type");
-        description.Name.Should().Be("Name");
-        description.HasInitializer.Should().BeFalse();
+        description.MemberType.ShouldBe(MemberType.Field);
+        description.IsInherited.ShouldBeFalse();
+        description.Type.ShouldBe("Type");
+        description.Name.ShouldBe("Name");
+        description.HasInitializer.ShouldBeFalse();
     }
 
     [DataRow(null, "Name", "type", DisplayName = "Constuctor should throw when `type` is `null`")]
@@ -26,8 +26,8 @@ public class FieldDescriptionTests
         Action act = () => new FieldDescription(type, name);
 
         // Assert
-        act.Should().ThrowExactly<ArgumentNullException>()
-            .WithParameterName(parameterName);
+        act.ShouldThrow<ArgumentNullException>()
+            .ParamName.ShouldBe(parameterName);
     }
 
     [TestMethod]
@@ -40,7 +40,7 @@ public class FieldDescriptionTests
         };
 
         // Assert
-        description.Initializer.Should().Be("1");
-        description.HasInitializer.Should().BeTrue();
+        description.Initializer.ShouldBe("1");
+        description.HasInitializer.ShouldBeTrue();
     }
 }

@@ -17,7 +17,7 @@ public partial class StringExtensionsTests
         var result = fullname.ClassName();
 
         // Assert
-        result.Should().Be(expectation);
+        result.ShouldBe(expectation);
     }
 
     [DataRow(null, "", DisplayName = "A `null` value should return an empty string")]
@@ -36,7 +36,7 @@ public partial class StringExtensionsTests
         var result = fullname.Namespace();
 
         // Assert
-        result.Should().Be(expectation);
+        result.ShouldBe(expectation);
     }
 
     [DataRow(null, 0, DisplayName = "A `null` value should return an empty list")]
@@ -55,6 +55,6 @@ public partial class StringExtensionsTests
         var result = fullname.NamespaceParts();
 
         // Assert
-        result.Should().HaveCount(expectation);
+        result.Count.ShouldBe(expectation);
     }
 }

@@ -45,8 +45,8 @@ public partial class IHaveModifiersExtensionsTests
         var result = (bool?)method.Invoke(null, parameters);
 
         // Assert
-        result.Should().NotBeNull();
-        result.Should().Be(expectation);
+        result.ShouldNotBeNull();
+        result.ShouldBe(expectation);
     }
 
     private class Mod : IHaveModifiers

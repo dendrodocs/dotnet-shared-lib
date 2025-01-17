@@ -10,8 +10,8 @@ public class ArgumentDescriptionTests
         var description = new ArgumentDescription("Type", "Text");
 
         // Assert
-        description.Type.Should().Be("Type");
-        description.Text.Should().Be("Text");
+        description.Type.ShouldBe("Type");
+        description.Text.ShouldBe("Text");
     }
 
     [DataRow(null, "Text", "type", DisplayName = "Constuctor should throw when `type` is `null`")]
@@ -23,7 +23,7 @@ public class ArgumentDescriptionTests
         Action act = () => new ArgumentDescription(type, text);
 
         // Assert
-        act.Should().ThrowExactly<ArgumentNullException>()
-            .WithParameterName(parameterName);
+        act.ShouldThrow<ArgumentNullException>()
+            .ParamName.ShouldBe(parameterName);
     }
 }

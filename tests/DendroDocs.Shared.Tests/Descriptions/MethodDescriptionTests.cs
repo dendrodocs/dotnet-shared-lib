@@ -10,12 +10,12 @@ public class MethodDescriptionTests
         var description = new MethodDescription("Type", "Name");
 
         // Assert
-        description.MemberType.Should().Be(MemberType.Method);
-        description.IsInherited.Should().BeFalse();
-        description.ReturnType.Should().Be("Type");
-        description.Name.Should().Be("Name");
-        description.Parameters.Should().BeEmpty();
-        description.Statements.Should().BeEmpty();
+        description.MemberType.ShouldBe(MemberType.Method);
+        description.IsInherited.ShouldBeFalse();
+        description.ReturnType.ShouldBe("Type");
+        description.Name.ShouldBe("Name");
+        description.Parameters.ShouldBeEmpty();
+        description.Statements.ShouldBeEmpty();
     }
 
     [TestMethod]
@@ -25,6 +25,6 @@ public class MethodDescriptionTests
         var description = new MethodDescription(null, "Name");
 
         // Assert
-        description.ReturnType.Should().Be("void");
+        description.ReturnType.ShouldBe("void");
     }
 }

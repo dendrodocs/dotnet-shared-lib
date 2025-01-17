@@ -17,7 +17,7 @@ public class TextJsonSerializationTests
         var result = JsonSerializer.Serialize(types, JsonDefaults.SerializerOptions());
 
         // Assert
-        result.Should().Be("[]");
+        result.ShouldBe("[]");
     }
 
     [TestMethod]
@@ -35,7 +35,7 @@ public class TextJsonSerializationTests
         var result = JsonSerializer.Serialize(types, JsonDefaults.SerializerOptions());
 
         // Assert
-        result.Should().Be(@"[{""FullName"":""Test""}]");
+        result.ShouldBe(@"[{""FullName"":""Test""}]");
     }
 
     [TestMethod]
@@ -53,7 +53,7 @@ public class TextJsonSerializationTests
         var result = JsonSerializer.Serialize(types, JsonDefaults.SerializerOptions());
 
         // Assert
-        result.Should().Be(@"[{""FullName"":""Test"",""Modifiers"":2}]");
+        result.ShouldBe(@"[{""FullName"":""Test"",""Modifiers"":2}]");
     }
 
     [TestMethod]
@@ -77,7 +77,7 @@ public class TextJsonSerializationTests
         var result = JsonSerializer.Serialize(types, JsonDefaults.SerializerOptions());
 
         // Assert
-        result.Should().Be(@"[{""FullName"":""Test"",""Methods"":[{""Name"":""Method""}]}]");
+        result.ShouldBe(@"[{""FullName"":""Test"",""Methods"":[{""Name"":""Method""}]}]");
     }
 
     [TestMethod]
@@ -102,7 +102,7 @@ public class TextJsonSerializationTests
         var result = JsonSerializer.Serialize(types, JsonDefaults.SerializerOptions());
 
         // Assert
-        result.Should().Match(@"[{""FullName"":""Test"",""Methods"":[{""Name"":""Method"",""ReturnType"":""int"",*}]}]");
+        result.ShouldMatch(@"[{""FullName"":""Test"",""Methods"":[{""Name"":""Method"",""ReturnType"":""int"",*}]}]");
     }
 
     [TestMethod]
@@ -122,7 +122,7 @@ public class TextJsonSerializationTests
         var result = JsonSerializer.Serialize(types, JsonDefaults.SerializerOptions());
 
         // Assert
-        result.Should().Match(@"[{""FullName"":""Test"",""Attributes"":[{""Type"":""System.ObsoleteAttribute"",""Name"":""System.Obsolete""}]}]");
+        result.ShouldMatch(@"[{""FullName"":""Test"",""Attributes"":[{""Type"":""System.ObsoleteAttribute"",""Name"":""System.Obsolete""}]}]");
     }
 
     [TestMethod]
@@ -144,6 +144,6 @@ public class TextJsonSerializationTests
         var result = JsonSerializer.Serialize(types, JsonDefaults.SerializerOptions());
 
         // Assert
-        result.Should().Match(@"[{""FullName"":""Test"",""Attributes"":[{""Type"":""System.ObsoleteAttribute"",""Name"":""System.Obsolete"",""Arguments"":[{""Name"":""message"",""Type"":""string"",""Value"":""Reason""}]}]}]");
+        result.ShouldMatch(@"[{""FullName"":""Test"",""Attributes"":[{""Type"":""System.ObsoleteAttribute"",""Name"":""System.Obsolete"",""Arguments"":[{""Name"":""message"",""Type"":""string"",""Value"":""Reason""}]}]}]");
     }
 }
