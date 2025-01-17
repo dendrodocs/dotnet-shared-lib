@@ -11,8 +11,8 @@ public class MemberDescriptionTests
         var descriptionY = new PropertyDescription("Type", "Name");
 
         // Assert
-        descriptionX.Should().Be(descriptionY);
-        descriptionX.GetHashCode().Should().Be(descriptionY.GetHashCode());
+        descriptionX.ShouldBe(descriptionY);
+        descriptionX.GetHashCode().ShouldBe(descriptionY.GetHashCode());
     }
 
     [TestMethod]
@@ -23,8 +23,7 @@ public class MemberDescriptionTests
         var descriptionY = new FieldDescription("Type", "Name");
 
         // Assert
-        descriptionX.Should().NotBe(descriptionY);
-        descriptionX.GetHashCode().Should().NotBe(descriptionY.GetHashCode());
+        descriptionX.GetHashCode().ShouldNotBe(descriptionY.GetHashCode());
     }
 
     [TestMethod]
@@ -35,8 +34,8 @@ public class MemberDescriptionTests
         var descriptionY = new PropertyDescription("Type", "NameB");
 
         // Assert
-        descriptionX.Should().NotBe(descriptionY);
-        descriptionX.GetHashCode().Should().NotBe(descriptionY.GetHashCode());
+        descriptionX.ShouldNotBe(descriptionY);
+        descriptionX.GetHashCode().ShouldNotBe(descriptionY.GetHashCode());
     }
 
     [TestMethod]
@@ -47,7 +46,6 @@ public class MemberDescriptionTests
         var descriptionY = new FieldDescription("Type", "NameB");
 
         // Assert
-        descriptionX.Should().NotBe(descriptionY);
-        descriptionX.GetHashCode().Should().NotBe(descriptionY.GetHashCode());
+        descriptionX.GetHashCode().ShouldNotBe(descriptionY.GetHashCode());
     }
 }

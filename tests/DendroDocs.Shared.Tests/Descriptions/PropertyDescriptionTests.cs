@@ -10,12 +10,12 @@ public class PropertyDescriptionTests
         var description = new PropertyDescription("Type", "Name");
 
         // Assert
-        description.MemberType.Should().Be(MemberType.Property);
-        description.IsInherited.Should().BeFalse();
-        description.Type.Should().Be("Type");
-        description.Name.Should().Be("Name");
-        description.HasInitializer.Should().BeFalse();
-        description.Attributes.Should().BeEmpty();
+        description.MemberType.ShouldBe(MemberType.Property);
+        description.IsInherited.ShouldBeFalse();
+        description.Type.ShouldBe("Type");
+        description.Name.ShouldBe("Name");
+        description.HasInitializer.ShouldBeFalse();
+        description.Attributes.ShouldBeEmpty();
     }
 
     [DataRow(null, "Name", "type", DisplayName = "Constuctor should throw when `type` is `null`")]
@@ -27,8 +27,8 @@ public class PropertyDescriptionTests
         Action act = () => new PropertyDescription(type, name);
 
         // Assert
-        act.Should().ThrowExactly<ArgumentNullException>()
-            .WithParameterName(parameterName);
+        act.ShouldThrow<ArgumentNullException>()
+            .ParamName.ShouldBe(parameterName);
     }
 
     [TestMethod]
@@ -41,7 +41,7 @@ public class PropertyDescriptionTests
         };
 
         // Assert
-        description.Initializer.Should().Be("1");
-        description.HasInitializer.Should().BeTrue();
+        description.Initializer.ShouldBe("1");
+        description.HasInitializer.ShouldBeTrue();
     }
 }

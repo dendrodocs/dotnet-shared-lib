@@ -10,9 +10,9 @@ public class InvocationDescriptionTests
         var description = new InvocationDescription("Type", "Name");
 
         // Assert
-        description.ContainingType.Should().Be("Type");
-        description.Name.Should().Be("Name");
-        description.Arguments.Should().BeEmpty();
+        description.ContainingType.ShouldBe("Type");
+        description.Name.ShouldBe("Name");
+        description.Arguments.ShouldBeEmpty();
     }
 
     [DataRow(null, "Name", "containingType", DisplayName = "Constuctor should throw when `containingType` is `null`")]
@@ -24,7 +24,7 @@ public class InvocationDescriptionTests
         Action act = () => new InvocationDescription(containingType, name);
 
         // Assert
-        act.Should().ThrowExactly<ArgumentNullException>()
-            .WithParameterName(parameterName);
+        act.ShouldThrow<ArgumentNullException>()
+            .ParamName.ShouldBe(parameterName);
     }
 }

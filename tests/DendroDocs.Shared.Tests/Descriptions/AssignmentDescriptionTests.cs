@@ -10,9 +10,9 @@ public class AssignmentDescriptionTests
         var description = new AssignmentDescription("Left", "=", "Right");
 
         // Assert
-        description.Left.Should().Be("Left");
-        description.Operator.Should().Be("=");
-        description.Right.Should().Be("Right");
+        description.Left.ShouldBe("Left");
+        description.Operator.ShouldBe("=");
+        description.Right.ShouldBe("Right");
     }
 
     [DataRow(null, "=", "Right", "left", DisplayName = "Constuctor should throw when `left` is `null`")]
@@ -25,7 +25,7 @@ public class AssignmentDescriptionTests
         Action act = () => new AssignmentDescription(left, @operator, right);
 
         // Assert
-        act.Should().ThrowExactly<ArgumentNullException>()
-            .WithParameterName(parameterName);
+        act.ShouldThrow<ArgumentNullException>()
+            .ParamName.ShouldBe(parameterName);
     }
 }

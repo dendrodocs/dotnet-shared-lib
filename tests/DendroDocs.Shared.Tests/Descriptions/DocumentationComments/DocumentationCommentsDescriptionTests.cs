@@ -10,7 +10,7 @@ public class DocumentationCommentsDescriptionTests
         var documentation = new DocumentationCommentsDescription();
 
         // Assert
-        documentation.Summary.Should().NotBeNull();
+        documentation.Summary.ShouldNotBeNull();
     }
 
     [TestMethod]
@@ -20,7 +20,7 @@ public class DocumentationCommentsDescriptionTests
         var documentation = new DocumentationCommentsDescription();
 
         // Assert
-        documentation.Returns.Should().NotBeNull();
+        documentation.Returns.ShouldNotBeNull();
     }
 
     [TestMethod]
@@ -30,7 +30,7 @@ public class DocumentationCommentsDescriptionTests
         var documentation = new DocumentationCommentsDescription();
 
         // Assert
-        documentation.Remarks.Should().NotBeNull();
+        documentation.Remarks.ShouldNotBeNull();
     }
 
     [TestMethod]
@@ -40,7 +40,7 @@ public class DocumentationCommentsDescriptionTests
         var documentation = new DocumentationCommentsDescription();
 
         // Assert
-        documentation.Value.Should().NotBeNull();
+        documentation.Value.ShouldNotBeNull();
     }
 
     [TestMethod]
@@ -50,7 +50,7 @@ public class DocumentationCommentsDescriptionTests
         var documentation = new DocumentationCommentsDescription();
 
         // Assert
-        documentation.Example.Should().NotBeNull();
+        documentation.Example.ShouldNotBeNull();
     }
 
     [TestMethod]
@@ -64,7 +64,7 @@ public class DocumentationCommentsDescriptionTests
         var result = DocumentationCommentsDescription.Parse(invalidXml);
 
         // Assert
-        result.Should().BeNull();
+        result.ShouldBeNull();
     }
 
     [TestMethod]
@@ -86,11 +86,11 @@ public class DocumentationCommentsDescriptionTests
         var result = DocumentationCommentsDescription.Parse(validXml)!;
 
         // Assert
-        result.Summary.Should().Be("Summary text");
-        result.Remarks.Should().Be("Remarks text");
-        result.Example.Should().Be("Example text");
-        result.Returns.Should().Be("Returns text");
-        result.Value.Should().Be("Value text");
+        result.Summary.ShouldBe("Summary text");
+        result.Remarks.ShouldBe("Remarks text");
+        result.Example.ShouldBe("Example text");
+        result.Returns.ShouldBe("Returns text");
+        result.Value.ShouldBe("Value text");
     }
 
     [TestMethod]
@@ -108,7 +108,7 @@ public class DocumentationCommentsDescriptionTests
         var result = DocumentationCommentsDescription.Parse(validXml)!;
 
         // Assert
-        result.Summary.Should().Be("This is plain text.");
+        result.Summary.ShouldBe("This is plain text.");
     }
 
     [TestMethod]
@@ -126,7 +126,7 @@ public class DocumentationCommentsDescriptionTests
         var result = DocumentationCommentsDescription.Parse(validXml)!;
 
         // Assert
-        result.Summary.Should().Be("This is inline code in the text.");
+        result.Summary.ShouldBe("This is inline code in the text.");
     }
 
     [TestMethod]
@@ -145,9 +145,9 @@ public class DocumentationCommentsDescriptionTests
         var result = DocumentationCommentsDescription.Parse(validXml)!;
 
         // Assert
-        result.Exceptions.Should().HaveCount(2);
-        result.Exceptions.Should().Contain("System.ArgumentNullException", "ArgumentNullException description");
-        result.Exceptions.Should().Contain("System.ArgumentException", "ArgumentException description");
+        result.Exceptions.Count.ShouldBe(2);
+        result.Exceptions.ShouldContainKeyAndValue("System.ArgumentNullException", "ArgumentNullException description");
+        result.Exceptions.ShouldContainKeyAndValue("System.ArgumentException", "ArgumentException description");
     }
 
     [TestMethod]
@@ -166,8 +166,8 @@ public class DocumentationCommentsDescriptionTests
         var result = DocumentationCommentsDescription.Parse(validXml)!;
 
         // Assert
-        result.Params.Should().Contain("param1", "Parameter 1 description");
-        result.TypeParams.Should().Contain("T", "Type parameter T description");
+        result.Params.ShouldContainKeyAndValue("param1", "Parameter 1 description");
+        result.TypeParams.ShouldContainKeyAndValue("T", "Type parameter T description");
     }
 
     [TestMethod]
@@ -185,7 +185,7 @@ public class DocumentationCommentsDescriptionTests
         var result = DocumentationCommentsDescription.Parse(validXml)!;
 
         // Assert
-        result.SeeAlsos.Should().Contain("System.Int32", "Custom see also text");
+        result.SeeAlsos.ShouldContainKeyAndValue("System.Int32", "Custom see also text");
     }
 
     [TestMethod]
@@ -203,7 +203,7 @@ public class DocumentationCommentsDescriptionTests
         var result = DocumentationCommentsDescription.Parse(validXml)!;
 
         // Assert
-        result.SeeAlsos.Should().Contain("System.String", "System.String");
+        result.SeeAlsos.ShouldContainKeyAndValue("System.String", "System.String");
     }
 
     [TestMethod]
@@ -224,10 +224,10 @@ public class DocumentationCommentsDescriptionTests
         var result = DocumentationCommentsDescription.Parse(validXml)!;
 
         // Assert
-        result.Exceptions.Should().BeEmpty();
-        result.Params.Should().BeEmpty();
-        result.Permissions.Should().BeEmpty();
-        result.TypeParams.Should().BeEmpty();
+        result.Exceptions.ShouldBeEmpty();
+        result.Params.ShouldBeEmpty();
+        result.Permissions.ShouldBeEmpty();
+        result.TypeParams.ShouldBeEmpty();
     }
 
     [TestMethod]
@@ -256,7 +256,7 @@ public class DocumentationCommentsDescriptionTests
         var result = DocumentationCommentsDescription.Parse(validXml)!;
 
         // Assert
-        result.Summary.Should().Be(
+        result.Summary.ShouldBe(
             """
             * Item 1 - Description 1
             * Item 2 - Description 2
@@ -289,7 +289,7 @@ public class DocumentationCommentsDescriptionTests
         var result = DocumentationCommentsDescription.Parse(validXml)!;
 
         // Assert
-        result.Summary.Should().Be(
+        result.Summary.ShouldBe(
             """
             1. Step 1 - Description 1
             2. Step 2 - Description 2
@@ -322,7 +322,7 @@ public class DocumentationCommentsDescriptionTests
         var result = DocumentationCommentsDescription.Parse(validXml)!;
 
         // Assert
-        result.Summary.Should().Be(
+        result.Summary.ShouldBe(
             """
             5. Step 1 - Description 1
             6. Step 2 - Description 2
@@ -355,7 +355,7 @@ public class DocumentationCommentsDescriptionTests
         var result = DocumentationCommentsDescription.Parse(validXml)!;
 
         // Assert
-        result.Summary.Should().Be("""
+        result.Summary.ShouldBe("""
             Term 1 — Description 1
             Term 2 — Description 2
             """.UseUnixNewLine());
@@ -383,7 +383,7 @@ public class DocumentationCommentsDescriptionTests
         var result = DocumentationCommentsDescription.Parse(validXml)!;
 
         // Assert
-        result.Summary.Should().Be("Item 1 — Description 1");
+        result.Summary.ShouldBe("Item 1 — Description 1");
     }
 
     [TestMethod]
@@ -406,7 +406,7 @@ public class DocumentationCommentsDescriptionTests
         var result = DocumentationCommentsDescription.Parse(validXml)!;
 
         // Assert
-        result.Summary.Should().Be(
+        result.Summary.ShouldBe(
             """
             First item
             Second item
@@ -432,7 +432,7 @@ public class DocumentationCommentsDescriptionTests
         var result = DocumentationCommentsDescription.Parse(validXml)!;
 
         // Assert
-        result.Summary.Should().Be("* Content without term or description");
+        result.Summary.ShouldBe("* Content without term or description");
     }
 
     [TestMethod]
@@ -459,7 +459,7 @@ public class DocumentationCommentsDescriptionTests
         var result = DocumentationCommentsDescription.Parse(validXml)!;
 
         // Assert
-        result.Summary.Should().Be(
+        result.Summary.ShouldBe(
             """
             This is regular content.
             * Item 1 - Description 1
@@ -482,7 +482,7 @@ public class DocumentationCommentsDescriptionTests
         var result = DocumentationCommentsDescription.Parse(validXml)!;
 
         // Assert
-        result.SeeAlsos.Should().Contain("System.String.Format", "See System.String.Format");
+        result.SeeAlsos.ShouldContainKeyAndValue("System.String.Format", "See System.String.Format");
     }
 
     [TestMethod]
@@ -503,7 +503,7 @@ public class DocumentationCommentsDescriptionTests
         var result = DocumentationCommentsDescription.Parse(validXml)!;
 
         // Assert
-        result.Summary.Should().Be(
+        result.Summary.ShouldBe(
             """
             This is the first paragraph.
             This is the second paragraph.
@@ -533,7 +533,7 @@ public class DocumentationCommentsDescriptionTests
         var result = DocumentationCommentsDescription.Parse(validXml)!;
 
         // Assert
-        result.Summary.Should().Be(
+        result.Summary.ShouldBe(
             """
             Here is an example:
             var x = 10;
@@ -560,7 +560,7 @@ public class DocumentationCommentsDescriptionTests
         var result = DocumentationCommentsDescription.Parse(validXml)!;
 
         // Assert
-        result.Summary.Should().Be("This method takes a parameter called param1.");
+        result.Summary.ShouldBe("This method takes a parameter called param1.");
     }
 
     [TestMethod]
@@ -580,7 +580,7 @@ public class DocumentationCommentsDescriptionTests
         var result = DocumentationCommentsDescription.Parse(validXml)!;
 
         // Assert
-        result.Summary.Should().Be("This method uses the type parameter T.");
+        result.Summary.ShouldBe("This method uses the type parameter T.");
     }
 
     [TestMethod]
@@ -600,7 +600,7 @@ public class DocumentationCommentsDescriptionTests
         var result = DocumentationCommentsDescription.Parse(validXml)!;
 
         // Assert
-        result.Summary.Should().Be("See System.String for more details.");
+        result.Summary.ShouldBe("See System.String for more details.");
     }
 
     [TestMethod]
@@ -620,7 +620,7 @@ public class DocumentationCommentsDescriptionTests
         var result = DocumentationCommentsDescription.Parse(validXml)!;
 
         // Assert
-        result.Summary.Should().Be("See string documentation for more details.");
+        result.Summary.ShouldBe("See string documentation for more details.");
     }
 
     [TestMethod]
@@ -640,7 +640,7 @@ public class DocumentationCommentsDescriptionTests
         var result = DocumentationCommentsDescription.Parse(validXml)!;
 
         // Assert
-        result.Summary.Should().Be("This text includes an empty see element: .");
+        result.Summary.ShouldBe("This text includes an empty see element: .");
     }
 
     [TestMethod]
@@ -660,7 +660,7 @@ public class DocumentationCommentsDescriptionTests
         var result = DocumentationCommentsDescription.Parse(validXml)!;
 
         // Assert
-        result.Summary.Should().Be("This method takes a parameter called .");
+        result.Summary.ShouldBe("This method takes a parameter called .");
     }
 
     [TestMethod]
@@ -680,7 +680,7 @@ public class DocumentationCommentsDescriptionTests
         var result = DocumentationCommentsDescription.Parse(validXml)!;
 
         // Assert
-        result.Summary.Should().Be("This method uses the type parameter .");
+        result.Summary.ShouldBe("This method uses the type parameter .");
     }
 
     [TestMethod]
@@ -700,7 +700,7 @@ public class DocumentationCommentsDescriptionTests
         var result = DocumentationCommentsDescription.Parse(validXml)!;
 
         // Assert
-        result.Summary.Should().Be("For more information, see System.String.");
+        result.Summary.ShouldBe("For more information, see System.String.");
     }
 
     [TestMethod]
@@ -720,7 +720,7 @@ public class DocumentationCommentsDescriptionTests
         var result = DocumentationCommentsDescription.Parse(validXml)!;
 
         // Assert
-        result.Summary.Should().Be("For more information, see .");
+        result.Summary.ShouldBe("For more information, see .");
     }
 
     [TestMethod]
@@ -740,7 +740,7 @@ public class DocumentationCommentsDescriptionTests
         var result = DocumentationCommentsDescription.Parse(validXml)!;
 
         // Assert
-        result.Summary.Should().Be("This text includes an unknown element: bold text.");
+        result.Summary.ShouldBe("This text includes an unknown element: bold text.");
     }
 
     [TestMethod]
@@ -760,7 +760,7 @@ public class DocumentationCommentsDescriptionTests
         var result = DocumentationCommentsDescription.Parse(validXml)!;
 
         // Assert
-        result.Summary.Should().Be("This text includes a self-closing element:.");
+        result.Summary.ShouldBe("This text includes a self-closing element:.");
     }
 
     [TestMethod]
@@ -780,7 +780,7 @@ public class DocumentationCommentsDescriptionTests
         var result = DocumentationCommentsDescription.Parse(validXml)!;
 
         // Assert
-        result.Summary.Should().Be("Some text.");
+        result.Summary.ShouldBe("Some text.");
     }
 
     [TestMethod]
@@ -809,7 +809,7 @@ public class DocumentationCommentsDescriptionTests
         var result = DocumentationCommentsDescription.Parse(validXml)!;
 
         // Assert
-        result.Example.Should().Be(
+        result.Example.ShouldBe(
             """
             The following example demonstrates the use of this method.
 
@@ -840,7 +840,7 @@ public class DocumentationCommentsDescriptionTests
         var result = DocumentationCommentsDescription.Parse(validXml)!;
 
         // Assert
-        result.Remarks.Should().Be(
+        result.Remarks.ShouldBe(
             """
             A
             B
@@ -882,7 +882,7 @@ public class DocumentationCommentsDescriptionTests
         var result = DocumentationCommentsDescription.Parse(validXml)!;
 
         // Assert
-        result.Summary.Should().Be(
+        result.Summary.ShouldBe(
             """
             This is a summary with mixed content.
             A paragraph

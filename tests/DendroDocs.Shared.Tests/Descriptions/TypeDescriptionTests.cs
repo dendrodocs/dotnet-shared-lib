@@ -10,12 +10,12 @@ public class TypeDescriptionTests
         var description = new TypeDescription(TypeType.Class, "Namespace.Class");
 
         // Assert
-        description.Type.Should().Be(TypeType.Class);
-        description.FullName.Should().Be("Namespace.Class");
-        description.Namespace.Should().Be("Namespace");
-        description.Name.Should().Be("Class");
-        description.BaseTypes.Should().BeEmpty();
-        description.Attributes.Should().BeEmpty();
+        description.Type.ShouldBe(TypeType.Class);
+        description.FullName.ShouldBe("Namespace.Class");
+        description.Namespace.ShouldBe("Namespace");
+        description.Name.ShouldBe("Class");
+        description.BaseTypes.ShouldBeEmpty();
+        description.Attributes.ShouldBeEmpty();
     }
 
     [DataRow("IsClass", TypeType.Class, true, DisplayName = "On a type description of `Class`, `IsClass()` should return `true`")]
@@ -37,8 +37,8 @@ public class TypeDescriptionTests
         var result = (bool?)method.Invoke(description, null);
 
         // Assert
-        result.Should().NotBeNull();
-        result.Should().Be(expected);
+        result.ShouldNotBeNull();
+        result.ShouldBe(expected);
     }
 
     [TestMethod]
@@ -49,9 +49,9 @@ public class TypeDescriptionTests
         description.AddMember(new PropertyDescription("Type", "Name"));
 
         // Assert
-        description.HasProperty("Name").Should().BeTrue();
-        description.HasProperty("Name2").Should().BeFalse("Because property is not added");
-        description.HasProperty("name").Should().BeFalse("Because name is case sensitive");
+        description.HasProperty("Name").ShouldBeTrue();
+        description.HasProperty("Name2").ShouldBeFalse("Because property is not added");
+        description.HasProperty("name").ShouldBeFalse("Because name is case sensitive");
     }
 
     [TestMethod]
@@ -62,9 +62,9 @@ public class TypeDescriptionTests
         description.AddMember(new FieldDescription("Type", "Name"));
 
         // Assert
-        description.HasField("Name").Should().BeTrue();
-        description.HasField("Name2").Should().BeFalse("Because field is not added");
-        description.HasField("name").Should().BeFalse("Because name is case sensitive");
+        description.HasField("Name").ShouldBeTrue();
+        description.HasField("Name2").ShouldBeFalse("Because field is not added");
+        description.HasField("name").ShouldBeFalse("Because name is case sensitive");
     }
 
     [TestMethod]
@@ -75,9 +75,9 @@ public class TypeDescriptionTests
         description.AddMember(new MethodDescription("Type", "Name"));
 
         // Assert
-        description.HasMethod("Name").Should().BeTrue();
-        description.HasMethod("Name2").Should().BeFalse("Because method is not added");
-        description.HasMethod("name").Should().BeFalse("Because name is case sensitive");
+        description.HasMethod("Name").ShouldBeTrue();
+        description.HasMethod("Name2").ShouldBeFalse("Because method is not added");
+        description.HasMethod("name").ShouldBeFalse("Because name is case sensitive");
     }
 
     [TestMethod]
@@ -88,9 +88,9 @@ public class TypeDescriptionTests
         description.AddMember(new EventDescription("Type", "Name"));
 
         // Assert
-        description.HasEvent("Name").Should().BeTrue();
-        description.HasEvent("Name2").Should().BeFalse("Because event is not added");
-        description.HasEvent("name").Should().BeFalse("Because name is case sensitive");
+        description.HasEvent("Name").ShouldBeTrue();
+        description.HasEvent("Name2").ShouldBeFalse("Because event is not added");
+        description.HasEvent("name").ShouldBeFalse("Because name is case sensitive");
     }
 
     [TestMethod]
@@ -101,9 +101,9 @@ public class TypeDescriptionTests
         description.AddMember(new EnumMemberDescription("Name", "0"));
 
         // Assert
-        description.HasEnumMember("Name").Should().BeTrue();
-        description.HasEnumMember("Name2").Should().BeFalse("Because enum member is not added");
-        description.HasEnumMember("name").Should().BeFalse("Because name is case sensitive");
+        description.HasEnumMember("Name").ShouldBeTrue();
+        description.HasEnumMember("Name2").ShouldBeFalse("Because enum member is not added");
+        description.HasEnumMember("name").ShouldBeFalse("Because name is case sensitive");
     }
 
     [TestMethod]
@@ -112,7 +112,7 @@ public class TypeDescriptionTests
         var descriptionX = new TypeDescription(0, "TestNamespace.TestClass").GetHashCode();
         var descriptionY = new TypeDescription(0, "TestNamespace.TestClass").GetHashCode();
 
-        descriptionX.Should().Be(descriptionY);
+        descriptionX.ShouldBe(descriptionY);
     }
 
     [TestMethod]
@@ -121,7 +121,7 @@ public class TypeDescriptionTests
         var descriptionX = new TypeDescription(TypeType.Class, "TestNamespace.TestClass").GetHashCode();
         var descriptionY = new TypeDescription(TypeType.Interface, "TestNamespace.TestClass").GetHashCode();
 
-        descriptionX.Should().Be(descriptionY);
+        descriptionX.ShouldBe(descriptionY);
     }
 
     [TestMethod]
@@ -130,7 +130,7 @@ public class TypeDescriptionTests
         var descriptionX = new TypeDescription(TypeType.Class, "TestNamespace.TestClass1").GetHashCode();
         var descriptionY = new TypeDescription(TypeType.Class, "TestNamespace.TestClass2").GetHashCode();
 
-        descriptionX.Should().NotBe(descriptionY);
+        descriptionX.ShouldNotBe(descriptionY);
     }
 
     [TestMethod]
@@ -139,7 +139,7 @@ public class TypeDescriptionTests
         var descriptionX = new TypeDescription(TypeType.Class, "TestNamespace.TestClass");
         var descriptionY = new TypeDescription(TypeType.Class, "TestNamespace.TestClass");
 
-        descriptionX.Equals(descriptionY).Should().BeTrue();
+        descriptionX.Equals(descriptionY).ShouldBeTrue();
     }
 
     [TestMethod]
@@ -148,7 +148,7 @@ public class TypeDescriptionTests
         var descriptionX = new TypeDescription(TypeType.Class, "TestNamespace.TestClass");
         var descriptionY = new TypeDescription(TypeType.Class, "testnamespace.testclass");
 
-        descriptionX.Equals(descriptionY).Should().BeFalse();
+        descriptionX.Equals(descriptionY).ShouldBeFalse();
     }
 
     [TestMethod]
@@ -157,7 +157,7 @@ public class TypeDescriptionTests
         var descriptionX = new TypeDescription(TypeType.Class, "TestNamespace.TestClass1");
         var descriptionY = new TypeDescription(TypeType.Class, "TestNamespace.TestClass2");
 
-        descriptionX.Equals(descriptionY).Should().BeFalse();
+        descriptionX.Equals(descriptionY).ShouldBeFalse();
     }
 
     [TestMethod]
@@ -166,7 +166,7 @@ public class TypeDescriptionTests
         var descriptionX = new TypeDescription(TypeType.Class, "TestNamespace.TestClass");
         var descriptionY = new object();
 
-        descriptionX.Equals(descriptionY).Should().BeFalse();
+        descriptionX.Equals(descriptionY).ShouldBeFalse();
     }
 
     [TestMethod]
@@ -174,8 +174,8 @@ public class TypeDescriptionTests
     {
         var description = new TypeDescription(TypeType.Class, "TestClass");
 
-        description.Namespace.Should().BeEmpty();
-        description.Name.Should().Be("TestClass");
+        description.Namespace.ShouldBeEmpty();
+        description.Name.ShouldBe("TestClass");
     }
 
     [TestMethod]
@@ -183,7 +183,7 @@ public class TypeDescriptionTests
     {
         var description = new TypeDescription(TypeType.Class, default);
 
-        description.FullName.Should().BeEmpty();
+        description.FullName.ShouldBeEmpty();
     }
 
     [TestMethod]
@@ -193,7 +193,7 @@ public class TypeDescriptionTests
 
         Action action = () => { description.AddMember(new UnsupportedMemberDescription("")); };
 
-        action.Should().Throw<NotSupportedException>();
+        action.ShouldThrow<NotSupportedException>();
     }
 
     [TestMethod]
@@ -207,11 +207,11 @@ public class TypeDescriptionTests
         description.AddMember(m);
 
         // Act
-        var bodies = description.MethodBodies();
+        var bodies = description.MethodBodies().ToArray();
 
         // Assert
-        bodies.Should().AllBeAssignableTo<IHaveAMethodBody>();
-        bodies.Should().BeEquivalentTo(new IHaveAMethodBody[] { c, m });
+        bodies.ShouldAllBe(i => typeof(IHaveAMethodBody).IsInstanceOfType(i));
+        bodies.ShouldBeEquivalentTo(new IHaveAMethodBody[] { c, m });
     }
 
     [TestMethod]
@@ -224,7 +224,7 @@ public class TypeDescriptionTests
         var implementsType = description.ImplementsType("System.Object");
 
         // Assert
-        implementsType.Should().BeFalse();
+        implementsType.ShouldBeFalse();
     }
 
     [TestMethod]
@@ -238,7 +238,7 @@ public class TypeDescriptionTests
         var implementsType = description.ImplementsType("System.Object");
 
         // Assert
-        implementsType.Should().BeTrue();
+        implementsType.ShouldBeTrue();
     }
 
     [TestMethod]
@@ -252,7 +252,7 @@ public class TypeDescriptionTests
         var implementsType = description.ImplementsType("System.Object2");
 
         // Assert
-        implementsType.Should().BeFalse();
+        implementsType.ShouldBeFalse();
     }
 
     [TestMethod]
@@ -265,7 +265,7 @@ public class TypeDescriptionTests
         var implementsType = description.ImplementsTypeStartsWith("System.Object");
 
         // Assert
-        implementsType.Should().BeFalse();
+        implementsType.ShouldBeFalse();
     }
 
     [TestMethod]
@@ -279,7 +279,7 @@ public class TypeDescriptionTests
         var implementsType = description.ImplementsTypeStartsWith("System.");
 
         // Assert
-        implementsType.Should().BeTrue();
+        implementsType.ShouldBeTrue();
     }
 
     [TestMethod]
@@ -293,7 +293,7 @@ public class TypeDescriptionTests
         var implementsType = description.ImplementsTypeStartsWith("SystemX.");
 
         // Assert
-        implementsType.Should().BeFalse();
+        implementsType.ShouldBeFalse();
     }
 
     private class UnsupportedMemberDescription(string name) : MemberDescription(name)

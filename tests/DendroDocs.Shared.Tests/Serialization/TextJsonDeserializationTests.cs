@@ -16,8 +16,8 @@ public class TextJsonDeserializationTests
         var types = JsonSerializer.Deserialize<List<TypeDescription>>(json, JsonDefaults.DeserializerOptions());
 
         // Assert
-        types.Should().NotBeNull();
-        types.Should().BeEmpty();
+        types.ShouldNotBeNull();
+        types.ShouldBeEmpty();
     }
 
     [TestMethod]
@@ -30,11 +30,11 @@ public class TextJsonDeserializationTests
         var types = JsonSerializer.Deserialize<List<TypeDescription>>(json, JsonDefaults.DeserializerOptions())!;
 
         // Assert
-        types.Should().HaveCount(1);
-        types[0].Should().NotBeNull();
-        types[0].Type.Should().Be(TypeType.Class);
-        types[0].FullName.Should().Be("Test");
-        types[0].Modifiers.Should().Be(Modifier.Internal);
+        types.Count.ShouldBe(1);
+        types[0].ShouldNotBeNull();
+        types[0].Type.ShouldBe(TypeType.Class);
+        types[0].FullName.ShouldBe("Test");
+        types[0].Modifiers.ShouldBe(Modifier.Internal);
     }
 
     [TestMethod]
@@ -47,12 +47,12 @@ public class TextJsonDeserializationTests
         var types = JsonSerializer.Deserialize<List<TypeDescription>>(json, JsonDefaults.DeserializerOptions())!;
 
         // Assert
-        types[0].Fields.Should().BeEmpty();
-        types[0].Constructors.Should().BeEmpty();
-        types[0].Properties.Should().BeEmpty();
-        types[0].Methods.Should().BeEmpty();
-        types[0].EnumMembers.Should().BeEmpty();
-        types[0].Events.Should().BeEmpty();
+        types[0].Fields.ShouldBeEmpty();
+        types[0].Constructors.ShouldBeEmpty();
+        types[0].Properties.ShouldBeEmpty();
+        types[0].Methods.ShouldBeEmpty();
+        types[0].EnumMembers.ShouldBeEmpty();
+        types[0].Events.ShouldBeEmpty();
     }
 
     [DataRow(00_001, Modifier.Internal, DisplayName = "A serialized value of `1` should be parsed as an `internal` modifier")]
@@ -85,7 +85,7 @@ public class TextJsonDeserializationTests
         var types = JsonSerializer.Deserialize<List<TypeDescription>>(json, JsonDefaults.DeserializerOptions())!;
 
         // Assert
-        types[0].Modifiers.Should().Be(modifier);
+        types[0].Modifiers.ShouldBe(modifier);
     }
 
     [TestMethod]
@@ -101,10 +101,10 @@ public class TextJsonDeserializationTests
         var types = JsonSerializer.Deserialize<List<TypeDescription>>(json, JsonDefaults.DeserializerOptions())!;
 
         // Assert
-        types[0].Methods.Should().HaveCount(1);
-        types[0].Methods[0].Should().NotBeNull();
-        types[0].Methods[0].Name.Should().Be("Method");
-        types[0].Methods[0].Modifiers.Should().Be(Modifier.Private);
+        types[0].Methods.Count.ShouldBe(1);
+        types[0].Methods[0].ShouldNotBeNull();
+        types[0].Methods[0].Name.ShouldBe("Method");
+        types[0].Methods[0].Modifiers.ShouldBe(Modifier.Private);
     }
 
     [TestMethod]
@@ -120,10 +120,10 @@ public class TextJsonDeserializationTests
         var types = JsonSerializer.Deserialize<List<TypeDescription>>(json, JsonDefaults.DeserializerOptions())!;
 
         // Assert
-        types[0].Attributes.Should().HaveCount(1);
-        types[0].Attributes[0].Should().NotBeNull();
-        types[0].Attributes[0].Type.Should().Be("System.ObsoleteAttribute");
-        types[0].Attributes[0].Name.Should().Be("System.Obsolete");
+        types[0].Attributes.Count.ShouldBe(1);
+        types[0].Attributes[0].ShouldNotBeNull();
+        types[0].Attributes[0].Type.ShouldBe("System.ObsoleteAttribute");
+        types[0].Attributes[0].Name.ShouldBe("System.Obsolete");
     }
 
     [TestMethod]
@@ -139,11 +139,11 @@ public class TextJsonDeserializationTests
         var types = JsonSerializer.Deserialize<List<TypeDescription>>(json, JsonDefaults.DeserializerOptions())!;
 
         // Assert
-        types[0].Attributes[0].Arguments.Should().HaveCount(1);
-        types[0].Attributes[0].Arguments[0].Should().NotBeNull();
-        types[0].Attributes[0].Arguments[0].Type.Should().Be("string");
-        types[0].Attributes[0].Arguments[0].Name.Should().Be(@"""Reason""");
-        types[0].Attributes[0].Arguments[0].Value.Should().Be(@"Reason");
+        types[0].Attributes[0].Arguments.Count.ShouldBe(1);
+        types[0].Attributes[0].Arguments[0].ShouldNotBeNull();
+        types[0].Attributes[0].Arguments[0].Type.ShouldBe("string");
+        types[0].Attributes[0].Arguments[0].Name.ShouldBe(@"""Reason""");
+        types[0].Attributes[0].Arguments[0].Value.ShouldBe(@"Reason");
     }
 
     [TestMethod]
@@ -169,7 +169,7 @@ public class TextJsonDeserializationTests
         var types = JsonSerializer.Deserialize<List<TypeDescription>>(json, JsonDefaults.DeserializerOptions())!;
 
         // Assert
-        types[0].Methods[0].Statements[0].Parent.Should().Be(types[0].Methods[0]);
+        types[0].Methods[0].Statements[0].Parent.ShouldBe(types[0].Methods[0]);
     }
 
     [TestMethod]
@@ -195,7 +195,7 @@ public class TextJsonDeserializationTests
         var types = JsonSerializer.Deserialize<List<TypeDescription>>(json, JsonDefaults.DeserializerOptions())!;
 
         // Assert
-        types[0].Constructors[0].Statements[0].Parent.Should().Be(types[0].Constructors[0]);
+        types[0].Constructors[0].Statements[0].Parent.ShouldBe(types[0].Constructors[0]);
     }
 
     [TestMethod]
@@ -220,10 +220,10 @@ public class TextJsonDeserializationTests
         var types = JsonSerializer.Deserialize<List<TypeDescription>>(json, JsonDefaults.DeserializerOptions())!;
 
         // Assert
-        types[0].Methods[0].Statements[0].Should().BeOfType<If>();
+        types[0].Methods[0].Statements[0].ShouldBeOfType<If>();
 
         var @if = (If)types[0].Methods[0].Statements[0];
-        @if.Sections[0].Parent.Should().Be(@if);
+        @if.Sections[0].Parent.ShouldBe(@if);
     }
 
     [TestMethod]
@@ -248,10 +248,10 @@ public class TextJsonDeserializationTests
         var types = JsonSerializer.Deserialize<List<TypeDescription>>(json, JsonDefaults.DeserializerOptions())!;
 
         // Assert
-        types[0].Methods[0].Statements[0].Should().BeOfType<If>();
+        types[0].Methods[0].Statements[0].ShouldBeOfType<If>();
 
         var @if = (If)types[0].Methods[0].Statements[0];
-        @if.Sections[0].Condition.Should().Be("true");
+        @if.Sections[0].Condition.ShouldBe("true");
     }
     
     [TestMethod]
@@ -282,10 +282,10 @@ public class TextJsonDeserializationTests
         var types = JsonSerializer.Deserialize<List<TypeDescription>>(json, JsonDefaults.DeserializerOptions())!;
 
         // Assert
-        types[0].Methods[0].Statements[0].Should().BeOfType<If>();
+        types[0].Methods[0].Statements[0].ShouldBeOfType<If>();
 
         var @if = (If)types[0].Methods[0].Statements[0];
-        @if.Sections[0].Statements[0].Parent.Should().Be(@if.Sections[0]);
+        @if.Sections[0].Statements[0].Parent.ShouldBe(@if.Sections[0]);
     }
 
     [TestMethod]
@@ -310,10 +310,10 @@ public class TextJsonDeserializationTests
         var types = JsonSerializer.Deserialize<List<TypeDescription>>(json, JsonDefaults.DeserializerOptions())!;
 
         // Assert
-        types[0].Methods[0].Statements[0].Should().BeOfType<Switch>();
+        types[0].Methods[0].Statements[0].ShouldBeOfType<Switch>();
 
         var @switch = (Switch)types[0].Methods[0].Statements[0];
-        @switch.Sections[0].Parent.Should().Be(@switch);
+        @switch.Sections[0].Parent.ShouldBe(@switch);
     }
 
     [TestMethod]
@@ -338,10 +338,10 @@ public class TextJsonDeserializationTests
         var types = JsonSerializer.Deserialize<List<TypeDescription>>(json, JsonDefaults.DeserializerOptions())!;
 
         // Assert
-        types[0].Methods[0].Statements[0].Should().BeOfType<Switch>();
+        types[0].Methods[0].Statements[0].ShouldBeOfType<Switch>();
 
         var @switch = (Switch)types[0].Methods[0].Statements[0];
-        @switch.Expression.Should().Be("type");
+        @switch.Expression.ShouldBe("type");
     }
 
     [TestMethod]
@@ -368,11 +368,11 @@ public class TextJsonDeserializationTests
         var types = JsonSerializer.Deserialize<List<TypeDescription>>(json, JsonDefaults.DeserializerOptions())!;
 
         // Assert
-        types[0].Methods[0].Statements[0].Should().BeOfType<Switch>();
+        types[0].Methods[0].Statements[0].ShouldBeOfType<Switch>();
 
         var @switch = (Switch)types[0].Methods[0].Statements[0];
-        @switch.Sections[0].Labels.Should().HaveCount(1);
-        @switch.Sections[0].Labels.Should().Contain("System.String");
+        @switch.Sections[0].Labels.Count.ShouldBe(1);
+        @switch.Sections[0].Labels.ShouldContain("System.String");
     }
 
     [TestMethod]
@@ -403,9 +403,9 @@ public class TextJsonDeserializationTests
         var types = JsonSerializer.Deserialize<List<TypeDescription>>(json, JsonDefaults.DeserializerOptions())!;
 
         // Assert
-        types[0].Methods[0].Statements[0].Should().BeOfType<Switch>();
+        types[0].Methods[0].Statements[0].ShouldBeOfType<Switch>();
 
         var @switch = (Switch)types[0].Methods[0].Statements[0];
-        @switch.Sections[0].Statements[0].Parent.Should().Be(@switch.Sections[0]);
+        @switch.Sections[0].Statements[0].Parent.ShouldBe(@switch.Sections[0]);
     }
 }

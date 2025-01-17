@@ -10,9 +10,9 @@ public class AttributeArgumentDescriptionTests
         var description = new AttributeArgumentDescription("Name", "Type", "Value");
 
         // Assert
-        description.Name.Should().Be("Name");
-        description.Type.Should().Be("Type");
-        description.Value.Should().Be("Value");
+        description.Name.ShouldBe("Name");
+        description.Type.ShouldBe("Type");
+        description.Value.ShouldBe("Value");
     }
 
     [DataRow(null, "=", "Value", "name", DisplayName = "Constuctor should throw when `name` is `null`")]
@@ -25,7 +25,7 @@ public class AttributeArgumentDescriptionTests
         Action act = () => new AttributeArgumentDescription(name, type, value);
 
         // Assert
-        act.Should().ThrowExactly<ArgumentNullException>()
-            .WithParameterName(parameterName);
+        act.ShouldThrow<ArgumentNullException>()
+            .ParamName.ShouldBe(parameterName);
     }
 }
