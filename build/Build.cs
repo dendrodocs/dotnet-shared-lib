@@ -7,15 +7,15 @@ using Nuke.Common.IO;
 using Nuke.Common.ProjectModel;
 using Nuke.Common.Tooling;
 using Nuke.Common.Tools.DotNet;
+using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
 using Nuke.Common.Tools.GitVersion;
 using Nuke.Common.Tools.ReportGenerator;
-using Nuke.Components;
 using static Nuke.Common.Tools.DotNet.DotNetTasks;
 using static Nuke.Common.Tools.ReportGenerator.ReportGeneratorTasks;
 using static Serilog.Log;
 
-[GitHubActions("Continuous", 
+[GitHubActions("Continuous",
     GitHubActionsImage.UbuntuLatest,
     AutoGenerate = false,
     FetchDepth = 0,
@@ -140,8 +140,8 @@ class Build : NukeBuild
                 .EnableNoLogo()
                 .EnableNoRestore()
                 .SetVerbosity(DotNetVerbosity.quiet)
-                .SetProcessArgumentConfigurator(_ => _
-                    .Add("-p:TestingPlatformCommandLineArguments=\"" +
+                .AddProcessAdditionalArguments(
+                    "-p:TestingPlatformCommandLineArguments=\"" +
                         "--report-trx " +
                         "--report-trx-filename DendroDocs.Shared.trx " +
                         $"--results-directory {TestResultsDirectory} " +
@@ -149,7 +149,7 @@ class Build : NukeBuild
                         "--coverage " +
                         "--coverage-output coverage.cobertura.xml " +
                         "--coverage-output-format cobertura" +
-                        "\"")
+                        "\""
                 )
             );
         });
