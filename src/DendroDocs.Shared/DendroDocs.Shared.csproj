@@ -13,6 +13,8 @@
     <NeutralLanguage>en-US</NeutralLanguage>
     <Version>0.1.0</Version>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageIcon>icon.png</PackageIcon>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
 
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
@@ -22,8 +24,8 @@
     <Using Include="System.ComponentModel" />
     <Using Include="System.Diagnostics" />
     <Using Include="System.Runtime.Serialization" />
-    <Using Include="System.Text.Json"/>
-    <Using Include="System.Text.Json.Serialization"/>
+    <Using Include="System.Text.Json" />
+    <Using Include="System.Text.Json.Serialization" />
     <Using Remove="System.IO" />
     <Using Remove="System.Net.Http" />
   </ItemGroup>
@@ -31,6 +33,11 @@
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" />
     <PackageReference Include="Microsoft.SourceLink.GitHub" PrivateAssets="All" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="icon.png" Pack="true" PackagePath="\" />
+    <None Update="README.md" Pack="true" PackagePath="\" />
   </ItemGroup>
 
 </Project>
