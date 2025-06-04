@@ -1,6 +1,6 @@
 # DendroDocs.Shared
 
-[![Nuget][NUGET_BADGE]][NUGET_FEED] [![Coverage Status](https://coveralls.io/repos/github/dendrodocs/dotnet-shared-lib/badge.svg?branch=main)](https://coveralls.io/github/dendrodocs/dotnet-shared-lib?branch=main)
+[![Nuget][NUGET_BADGE]][NUGET_FEED] [![Coverage Status][COVERALLS_BADGE]][COVERALLS_LINK]
 
 **DendroDocs.Shared** is a shared library used across multiple components of the DendroDocs ecosystem.
 It provides common utilities, abstractions, and extensions that are essential for the functionality of tools like [DendroDocs.Tool](https://github.com/dendrodocs/dotnet-tool) and other .NET-based projects using DendroDocs.
@@ -8,7 +8,7 @@ It provides common utilities, abstractions, and extensions that are essential fo
 ## Features
 
 * Provides common code that can be leveraged by other tools in the DendroDocs ecosystem to ensure consistency and reduce duplication.
-* *Includes helper methods and extensions that simplify common tasks like parsing, JSON handling, and model transformations.
+* Includes helper methods and extensions that simplify common tasks like parsing, JSON handling, and model transformations.
 * Contains shared data models used by the DendroDocs analyzers and documentation generators.
 
 ## Prerequisites
@@ -23,7 +23,7 @@ To use **DendroDocs.Shared** in your project, install it as a NuGet package:
 dotnet add package DendroDocs.Shared
 ```
 
-## Example usage:
+## Example usage
 
 ```csharp
 using DendroDocs.Extensions;
@@ -38,7 +38,7 @@ var serializerSettings = JsonDefaults.SerializerSettings();
 var result = JsonConvert.SerializeObject(types.OrderBy(t => t.FullName), serializerSettings);
 ```
 
-# The DendroDocs Ecosystem
+## The DendroDocs Ecosystem
 
 **DendroDocs.Shared** is a crucial part of the broader DendroDocs ecosystem.
 Explore [DendroDocs](https://github.com/dendrodocs) to find more tools, libraries, and documentation resources that help you bridge the gap between your code and its documentation.
@@ -64,3 +64,5 @@ This project is licensed under the [MIT License](./LICENSE).
 
 [NUGET_BADGE]: https://img.shields.io/nuget/v/DendroDocs.Shared.svg?style=plastic
 [NUGET_FEED]: https://www.nuget.org/packages/DendroDocs.Shared/
+[COVERALLS_BADGE]: https://coveralls.io/repos/github/dendrodocs/dotnet-shared-lib/badge.svg?branch=main
+[COVERALLS_LINK]: https://coveralls.io/github/dendrodocs/dotnet-shared-lib?branch=main
