@@ -408,4 +408,51 @@ public class TextJsonDeserializationTests
         var @switch = (Switch)types[0].Methods[0].Statements[0];
         @switch.Sections[0].Statements[0].Parent.ShouldBe(@switch.Sections[0]);
     }
+
+    [TestMethod]
+    public void MethodWithReturnTypeInJson_Should_DeserializeCorrectly()
+    {
+        // Assign
+        var json =
+            """
+            [{
+                "FullName": "Test.Class",
+                "Methods": [{
+                    "Name": "GetAllAsync",
+                    "ReturnType": "System.Threading.Tasks.Task<Microsoft.AspNetCore.Mvc.IActionResult>"
+                }]
+            }]
+            """;
+
+        // Act
+        var types = JsonSerializer.Deserialize<List<TypeDescription>>(json, JsonDefaults.DeserializerOptions())!;
+
+        // Assert
+        types[0].Methods.Count.ShouldBe(1);
+        types[0].Methods[0].Name.ShouldBe("GetAllAsync");
+        types[0].Methods[0].ReturnType.ShouldBe("System.Threading.Tasks.Task<Microsoft.AspNetCore.Mvc.IActionResult>");
+    }
+
+    [TestMethod]
+    public void MethodWithoutReturnTypeInJson_Should_DefaultToVoid()
+    {
+        // Assign
+        var json =
+            """
+            [{
+                "FullName": "Test.Class",
+                "Methods": [{
+                    "Name": "VoidMethod"
+                }]
+            }]
+            """;
+
+        // Act
+        var types = JsonSerializer.Deserialize<List<TypeDescription>>(json, JsonDefaults.DeserializerOptions())!;
+
+        // Assert
+        types[0].Methods.Count.ShouldBe(1);
+        types[0].Methods[0].Name.ShouldBe("VoidMethod");
+        types[0].Methods[0].ReturnType.ShouldBe("void");
+    }
 }
