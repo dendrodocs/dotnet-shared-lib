@@ -123,6 +123,11 @@ public static class JsonDefaults
                 var defaultValueAttribute = reflectedProperty.GetCustomAttribute<DefaultValueAttribute>();
                 if (defaultValueAttribute is not null)
                 {
+                    if (!reflectedProperty.CanWrite)
+                    {
+                        continue;
+                    }
+                    
                     // Check if not already set, e.g. by a property initializer
                     if (!Equals(reflectedProperty.GetValue(obj), defaultValueAttribute.Value))
                     {
