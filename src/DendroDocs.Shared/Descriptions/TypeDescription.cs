@@ -16,7 +16,8 @@ public class TypeDescription(TypeType type, string? fullName) : IHaveModifiers
         IReadOnlyList<MethodDescription> methods,
         IReadOnlyList<EnumMemberDescription> enumMembers,
         IReadOnlyList<EventDescription> events,
-        List<AttributeDescription> attributes
+        List<AttributeDescription> attributes,
+        List<string> baseTypes
     )
         : this(type, fullName)
     {
@@ -27,6 +28,7 @@ public class TypeDescription(TypeType type, string? fullName) : IHaveModifiers
         if (enumMembers is not null) this.enumMembers = [.. enumMembers];
         if (events is not null) this.events = [.. events];
         if (attributes is not null) this.Attributes.AddRange(attributes);
+        if (baseTypes is not null) this.BaseTypes.AddRange(baseTypes);
     }
 
     [Newtonsoft.Json.JsonProperty(Order = 1, PropertyName = nameof(Fields))]

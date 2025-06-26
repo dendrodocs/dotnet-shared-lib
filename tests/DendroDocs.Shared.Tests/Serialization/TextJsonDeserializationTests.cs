@@ -455,4 +455,29 @@ public class TextJsonDeserializationTests
         types[0].Methods[0].Name.ShouldBe("VoidMethod");
         types[0].Methods[0].ReturnType.ShouldBe("void");
     }
+
+    [TestMethod]
+    public void BaseTypes_Should_BeDeserializedCorrectly()
+    {
+        // Assign
+        var json =
+            """
+            [{
+                "FullName": "Pitstop.TimeService.Events.DayHasPassed",
+                "BaseTypes": [
+                    "Pitstop.Infrastructure.Messaging.Event",
+                    "System.Object"
+                ]
+            }]
+            """;
+
+        // Act
+        var types = JsonSerializer.Deserialize<List<TypeDescription>>(json, JsonDefaults.DeserializerOptions())!;
+
+        // Assert
+        types.Count.ShouldBe(1);
+        types[0].BaseTypes.Count.ShouldBe(2);
+        types[0].BaseTypes.ShouldContain("Pitstop.Infrastructure.Messaging.Event");
+        types[0].BaseTypes.ShouldContain("System.Object");
+    }
 }

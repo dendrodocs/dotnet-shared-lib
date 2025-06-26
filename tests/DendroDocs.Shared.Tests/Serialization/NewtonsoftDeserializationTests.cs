@@ -369,4 +369,26 @@ public class NewtonsoftDeserializationTests
         var @switch = (Switch)types[0].Methods[0].Statements[0];
         @switch.Sections[0].Statements[0].Parent.ShouldBe(@switch.Sections[0]);
     }
+
+    [TestMethod]
+    public void BaseTypes_Should_BeDeserializedCorrectly()
+    {
+        // Assign
+        var json = @"[{
+            ""FullName"": ""Pitstop.TimeService.Events.DayHasPassed"",
+            ""BaseTypes"": [
+                ""Pitstop.Infrastructure.Messaging.Event"",
+                ""System.Object""
+            ]
+        }]";
+
+        // Act
+        var types = JsonConvert.DeserializeObject<List<TypeDescription>>(json, JsonDefaults.DeserializerSettings())!;
+
+        // Assert
+        types.Count.ShouldBe(1);
+        types[0].BaseTypes.Count.ShouldBe(2);
+        types[0].BaseTypes.ShouldContain("Pitstop.Infrastructure.Messaging.Event");
+        types[0].BaseTypes.ShouldContain("System.Object");
+    }
 }
