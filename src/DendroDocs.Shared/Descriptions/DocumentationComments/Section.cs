@@ -3,7 +3,7 @@ namespace DendroDocs.DocumentationComments;
 /// <summary>
 /// Provides constant values for XML documentation comment section element names.
 /// </summary>
-public class Section
+public static class Section
 {
     /// <summary>
     /// The "example" section element constant.
