@@ -26,7 +26,7 @@ public class ConstructorDescription(string name) : MemberDescription(name), IHav
     /// </summary>
     [Newtonsoft.Json.JsonProperty(ItemTypeNameHandling = Newtonsoft.Json.TypeNameHandling.None)]
     [Newtonsoft.Json.JsonConverter(typeof(ConcreteTypeConverter<List<ParameterDescription>>))]
-    public List<ParameterDescription> Parameters { get; } = [];
+    public List<ParameterDescription> Parameters { get; init; } = [];
 
     /// <summary>
     /// Gets the collection of statements that make up the constructor body.
