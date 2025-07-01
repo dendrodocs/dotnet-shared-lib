@@ -11,7 +11,7 @@ public static class StringExtensions
     /// Extracts the class name from a fully qualified type name.
     /// </summary>
     /// <param name="fullName">The fully qualified type name.</param>
-    /// <returns>The class name without namespace qualification, or an empty string if the input is null.</returns>
+    /// <returns>The class name without namespace qualification, or an empty string if the input is <c>null</c>.</returns>
     public static string ClassName(this string fullName)
     {
         if (fullName is null)
@@ -26,7 +26,7 @@ public static class StringExtensions
     /// Extracts the namespace from a fully qualified type name.
     /// </summary>
     /// <param name="fullName">The fully qualified type name.</param>
-    /// <returns>The namespace portion, or an empty string if the input is null or has no namespace.</returns>
+    /// <returns>The namespace portion, or an empty string if the input is <c>null</c> or has no namespace.</returns>
     public static string Namespace(this string fullName)
     {
         if (fullName is null)
@@ -41,7 +41,7 @@ public static class StringExtensions
     /// Splits a fully qualified type name into its namespace components.
     /// </summary>
     /// <param name="fullName">The fully qualified type name.</param>
-    /// <returns>A read-only list of namespace parts, or an empty list if the input is null.</returns>
+    /// <returns>A read-only list of namespace parts, or an empty list if the input is <c>null</c>.</returns>
     public static IReadOnlyList<string> NamespaceParts(this string fullName)
     {
         if (fullName is null)

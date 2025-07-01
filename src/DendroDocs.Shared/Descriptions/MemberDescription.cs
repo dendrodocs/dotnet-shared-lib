@@ -48,7 +48,7 @@ public abstract class MemberDescription(string name) : IMemberable
     /// Determines whether the specified object is equal to the current member description.
     /// </summary>
     /// <param name="obj">The object to compare with the current member description.</param>
-    /// <returns>true if the specified object is equal to the current member description; otherwise, false.</returns>
+    /// <returns><c>true</c> if the specified object is equal to the current member description; otherwise, <c>false</c>.</returns>
     public override bool Equals(object? obj)
     {
         if (obj is not MemberDescription other)

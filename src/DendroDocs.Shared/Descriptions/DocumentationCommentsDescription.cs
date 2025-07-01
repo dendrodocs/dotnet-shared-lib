@@ -79,7 +79,7 @@ public partial class DocumentationCommentsDescription
     /// Parses XML documentation comment text into a structured representation.
     /// </summary>
     /// <param name="documentationCommentXml">The XML documentation comment string to parse.</param>
-    /// <returns>A parsed <see cref="DocumentationCommentsDescription"/> object, or null if the input is empty, null, or unparseable.</returns>
+    /// <returns>A parsed <see cref="DocumentationCommentsDescription"/> object, or <c>null</c> if the input is empty, <c>null</c>, or unparseable.</returns>
     public static DocumentationCommentsDescription? Parse(string? documentationCommentXml)
     {
         if (string.IsNullOrWhiteSpace(documentationCommentXml) || documentationCommentXml!.StartsWith("<!--", StringComparison.Ordinal))

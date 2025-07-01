@@ -191,7 +191,7 @@ public class TypeDescription(TypeType type, string? fullName) : IHaveModifiers
     /// Determines whether the specified object is equal to the current type description.
     /// </summary>
     /// <param name="obj">The object to compare with the current type description.</param>
-    /// <returns>true if the specified object is equal to the current type description; otherwise, false.</returns>
+    /// <returns><c>true</c> if the specified object is equal to the current type description; otherwise, <c>false</c>.</returns>
     public override bool Equals(object? obj)
     {
         if (obj is not TypeDescription other)
@@ -218,72 +218,72 @@ public class TypeDescription(TypeType type, string? fullName) : IHaveModifiers
     /// Determines whether this type implements or inherits from the specified type.
     /// </summary>
     /// <param name="fullName">The full name of the type to check for.</param>
-    /// <returns>true if this type implements or inherits from the specified type; otherwise, false.</returns>
+    /// <returns><c>true</c> if this type implements or inherits from the specified type; otherwise, <c>false</c>.</returns>
     public bool ImplementsType(string fullName) => this.BaseTypes.Contains(fullName);
 
     /// <summary>
     /// Determines whether this type implements or inherits from any type whose name starts with the specified partial name.
     /// </summary>
     /// <param name="partialName">The partial name to search for at the beginning of base type names.</param>
-    /// <returns>true if this type implements or inherits from a type whose name starts with the specified partial name; otherwise, false.</returns>
+    /// <returns><c>true</c> if this type implements or inherits from a type whose name starts with the specified partial name; otherwise, <c>false</c>.</returns>
     public bool ImplementsTypeStartsWith(string partialName) => this.BaseTypes.Any(bt => bt.StartsWith(partialName, StringComparison.Ordinal));
 
     /// <summary>
     /// Determines whether this type is a class.
     /// </summary>
-    /// <returns>true if this type is a class; otherwise, false.</returns>
+    /// <returns><c>true</c> if this type is a class; otherwise, <c>false</c>.</returns>
     public bool IsClass() => this.Type == TypeType.Class;
 
     /// <summary>
     /// Determines whether this type is an enumeration.
     /// </summary>
-    /// <returns>true if this type is an enumeration; otherwise, false.</returns>
+    /// <returns><c>true</c> if this type is an enumeration; otherwise, <c>false</c>.</returns>
     public bool IsEnum() => this.Type == TypeType.Enum;
 
     /// <summary>
     /// Determines whether this type is an interface.
     /// </summary>
-    /// <returns>true if this type is an interface; otherwise, false.</returns>
+    /// <returns><c>true</c> if this type is an interface; otherwise, <c>false</c>.</returns>
     public bool IsInterface() => this.Type == TypeType.Interface;
 
     /// <summary>
     /// Determines whether this type is a struct.
     /// </summary>
-    /// <returns>true if this type is a struct; otherwise, false.</returns>
+    /// <returns><c>true</c> if this type is a struct; otherwise, <c>false</c>.</returns>
     public bool IsStruct() => this.Type == TypeType.Struct;
 
     /// <summary>
     /// Determines whether this type has a property with the specified name.
     /// </summary>
     /// <param name="name">The name of the property to search for.</param>
-    /// <returns>true if this type has a property with the specified name; otherwise, false.</returns>
+    /// <returns><c>true</c> if this type has a property with the specified name; otherwise, <c>false</c>.</returns>
     public bool HasProperty(string name) => this.properties.Any(m => string.Equals(m.Name, name, StringComparison.Ordinal));
 
     /// <summary>
     /// Determines whether this type has a method with the specified name.
     /// </summary>
     /// <param name="name">The name of the method to search for.</param>
-    /// <returns>true if this type has a method with the specified name; otherwise, false.</returns>
+    /// <returns><c>true</c> if this type has a method with the specified name; otherwise, <c>false</c>.</returns>
     public bool HasMethod(string name) => this.methods.Any(m => string.Equals(m.Name, name, StringComparison.Ordinal));
 
     /// <summary>
     /// Determines whether this type has an event with the specified name.
     /// </summary>
     /// <param name="name">The name of the event to search for.</param>
-    /// <returns>true if this type has an event with the specified name; otherwise, false.</returns>
+    /// <returns><c>true</c> if this type has an event with the specified name; otherwise, <c>false</c>.</returns>
     public bool HasEvent(string name) => this.events.Any(m => string.Equals(m.Name, name, StringComparison.Ordinal));
 
     /// <summary>
     /// Determines whether this type has a field with the specified name.
     /// </summary>
     /// <param name="name">The name of the field to search for.</param>
-    /// <returns>true if this type has a field with the specified name; otherwise, false.</returns>
+    /// <returns><c>true</c> if this type has a field with the specified name; otherwise, <c>false</c>.</returns>
     public bool HasField(string name) => this.fields.Any(m => string.Equals(m.Name, name, StringComparison.Ordinal));
 
     /// <summary>
     /// Determines whether this type has an enum member with the specified name.
     /// </summary>
     /// <param name="name">The name of the enum member to search for.</param>
-    /// <returns>true if this type has an enum member with the specified name; otherwise, false.</returns>
+    /// <returns><c>true</c> if this type has an enum member with the specified name; otherwise, <c>false</c>.</returns>
     public bool HasEnumMember(string name) => this.enumMembers.Any(m => string.Equals(m.Name, name, StringComparison.Ordinal));
 }
