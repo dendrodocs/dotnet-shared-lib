@@ -5,8 +5,15 @@ using Newtonsoft.Json;
 
 namespace DendroDocs.Json;
 
+/// <summary>
+/// Provides default JSON serialization settings and options optimized for DendroDocs data structures.
+/// </summary>
 public static class JsonDefaults
 {
+    /// <summary>
+    /// Creates JSON serializer settings optimized for DendroDocs data structures using Newtonsoft.Json.
+    /// </summary>
+    /// <returns>Configured JSON serializer settings with appropriate defaults.</returns>
     public static JsonSerializerSettings SerializerSettings()
     {
         var serializerSettings = new JsonSerializerSettings
@@ -20,6 +27,10 @@ public static class JsonDefaults
         return serializerSettings;
     }
 
+    /// <summary>
+    /// Creates JSON serializer options optimized for DendroDocs data structures using System.Text.Json.
+    /// </summary>
+    /// <returns>Configured JSON serializer options with appropriate defaults.</returns>
     public static JsonSerializerOptions SerializerOptions()
     {
         var options = new JsonSerializerOptions
@@ -38,6 +49,10 @@ public static class JsonDefaults
         return options;
     }
 
+    /// <summary>
+    /// Creates JSON deserializer settings optimized for DendroDocs data structures using Newtonsoft.Json.
+    /// </summary>
+    /// <returns>Configured JSON deserializer settings with appropriate defaults.</returns>
     public static JsonSerializerSettings DeserializerSettings()
     {
         var serializerSettings = new JsonSerializerSettings
@@ -50,6 +65,10 @@ public static class JsonDefaults
         return serializerSettings;
     }
 
+    /// <summary>
+    /// Creates JSON deserializer options optimized for DendroDocs data structures using System.Text.Json.
+    /// </summary>
+    /// <returns>Configured JSON deserializer options with appropriate defaults.</returns>
     public static JsonSerializerOptions? DeserializerOptions()
     {
         var options = new JsonSerializerOptions
