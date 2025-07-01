@@ -23,6 +23,16 @@ To use **DendroDocs.Shared** in your project, install it as a NuGet package:
 dotnet add package DendroDocs.Shared
 ```
 
+## Security & Build Attestation
+
+This library includes build attestation through GitHub's attest-build-provenance action, providing cryptographic proof of the build process and artifact integrity. Each published package includes verifiable provenance information that demonstrates:
+
+* The exact repository and commit that built the artifacts
+* The GitHub Actions workflow that produced the packages
+* Cryptographic signatures ensuring artifact authenticity
+
+This ensures that the packages you install have not been tampered with and came from the official DendroDocs build pipeline.
+
 ## Example usage
 
 ```csharp
