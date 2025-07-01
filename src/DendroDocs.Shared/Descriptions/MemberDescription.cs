@@ -44,6 +44,11 @@ public abstract class MemberDescription(string name) : IMemberable
     [Newtonsoft.Json.JsonConverter(typeof(ConcreteTypeConverter<List<AttributeDescription>>))]
     public List<AttributeDescription> Attributes { get; init; } = [];
 
+    /// <summary>
+    /// Determines whether the specified object is equal to the current member description.
+    /// </summary>
+    /// <param name="obj">The object to compare with the current member description.</param>
+    /// <returns>true if the specified object is equal to the current member description; otherwise, false.</returns>
     public override bool Equals(object? obj)
     {
         if (obj is not MemberDescription other)
@@ -54,6 +59,10 @@ public abstract class MemberDescription(string name) : IMemberable
         return Equals(this.MemberType, other.MemberType) && string.Equals(this.Name, other.Name);
     }
 
+    /// <summary>
+    /// Returns the hash code for this member description.
+    /// </summary>
+    /// <returns>A hash code for the current member description.</returns>
     public override int GetHashCode()
     {
         return (this.MemberType, this.Name).GetHashCode();
