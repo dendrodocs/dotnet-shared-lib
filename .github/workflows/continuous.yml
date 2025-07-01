@@ -14,6 +14,10 @@ jobs:
   ubuntu-latest:
     name: ubuntu-latest
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+      attestations: write
     steps:
       - uses: actions/checkout@v4
         with:
@@ -32,6 +36,10 @@ jobs:
           NuGetApiKey: ${{ secrets.NUGET_API_KEY }}
       - name: Report Coveralls
         uses: coverallsapp/github-action@v2
+      - name: 'Attest: Build Provenance'
+        uses: actions/attest-build-provenance@v1
+        with:
+          subject-path: 'Artifacts/*.nupkg,Artifacts/*.snupkg'
       - name: 'Publish: Artifacts'
         uses: actions/upload-artifact@v4
         with:
