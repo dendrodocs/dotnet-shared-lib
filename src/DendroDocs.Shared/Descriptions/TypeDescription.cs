@@ -3,9 +3,25 @@ using DendroDocs.Json;
 
 namespace DendroDocs;
 
+/// <summary>
+/// Represents a .NET type (class, interface, struct, enum, or delegate) with its members, modifiers, and metadata.
+/// </summary>
 [DebuggerDisplay("{Type} {Name,nq} ({Namespace,nq})")]
 public class TypeDescription(TypeType type, string? fullName) : IHaveModifiers
 {
+    /// <summary>
+    /// Initializes a new instance of the <see cref="TypeDescription"/> class with full type information.
+    /// </summary>
+    /// <param name="type">The type of the .NET type (class, interface, struct, enum, or delegate).</param>
+    /// <param name="fullName">The fully qualified name of the type.</param>
+    /// <param name="fields">The collection of field descriptions.</param>
+    /// <param name="constructors">The collection of constructor descriptions.</param>
+    /// <param name="properties">The collection of property descriptions.</param>
+    /// <param name="methods">The collection of method descriptions.</param>
+    /// <param name="enumMembers">The collection of enum member descriptions.</param>
+    /// <param name="events">The collection of event descriptions.</param>
+    /// <param name="attributes">The collection of attribute descriptions.</param>
+    /// <param name="baseTypes">The collection of base type names.</param>
     [Newtonsoft.Json.JsonConstructor]
     [JsonConstructor]
     public TypeDescription(
@@ -49,48 +65,95 @@ public class TypeDescription(TypeType type, string? fullName) : IHaveModifiers
     [Newtonsoft.Json.JsonProperty(Order = 6, PropertyName = nameof(Events))]
     private readonly List<EventDescription> events = [];
 
+    /// <summary>
+    /// Gets the type category of this type (class, interface, struct, enum, or delegate).
+    /// </summary>
     public TypeType Type { get; } = type;
 
+    /// <summary>
+    /// Gets the fully qualified name of the type, including namespace.
+    /// </summary>
     public string FullName { get; } = fullName ?? string.Empty;
 
+    /// <summary>
+    /// Gets or sets the parsed XML documentation comments for this type.
+    /// </summary>
     public DocumentationCommentsDescription? DocumentationComments { get; set; }
 
+    /// <summary>
+    /// Gets the collection of base type names that this type inherits from or implements.
+    /// </summary>
     public List<string> BaseTypes { get; } = [];
 
+    /// <summary>
+    /// Gets or sets the access modifiers and other modifiers applied to this type.
+    /// </summary>
     [DefaultValue(Modifier.Internal)]
     [Newtonsoft.Json.JsonProperty(DefaultValueHandling = Newtonsoft.Json.DefaultValueHandling.IgnoreAndPopulate)]
     public Modifier Modifiers { get; set; }
 
+    /// <summary>
+    /// Gets the collection of attributes applied to this type.
+    /// </summary>
     [Newtonsoft.Json.JsonProperty(ItemTypeNameHandling = Newtonsoft.Json.TypeNameHandling.None)]
     [Newtonsoft.Json.JsonConverter(typeof(ConcreteTypeConverter<List<AttributeDescription>>))]
     public List<AttributeDescription> Attributes { get; } = [];
 
+    /// <summary>
+    /// Gets the simple name of the type without namespace qualification.
+    /// </summary>
     [Newtonsoft.Json.JsonIgnore]
     [JsonIgnore]
     public string Name => this.FullName.ClassName();
 
+    /// <summary>
+    /// Gets the namespace containing this type.
+    /// </summary>
     [Newtonsoft.Json.JsonIgnore]
     [JsonIgnore]
     public string Namespace => this.FullName.Namespace();
 
+    /// <summary>
+    /// Gets the read-only collection of field descriptions for this type.
+    /// </summary>
     [Newtonsoft.Json.JsonIgnore]
     public IReadOnlyList<FieldDescription> Fields => this.fields;
 
+    /// <summary>
+    /// Gets the read-only collection of constructor descriptions for this type.
+    /// </summary>
     [Newtonsoft.Json.JsonIgnore]
     public IReadOnlyList<ConstructorDescription> Constructors => this.constructors;
 
+    /// <summary>
+    /// Gets the read-only collection of property descriptions for this type.
+    /// </summary>
     [Newtonsoft.Json.JsonIgnore]
     public IReadOnlyList<PropertyDescription> Properties => this.properties;
 
+    /// <summary>
+    /// Gets the read-only collection of method descriptions for this type.
+    /// </summary>
     [Newtonsoft.Json.JsonIgnore]
     public IReadOnlyList<MethodDescription> Methods => this.methods;
 
+    /// <summary>
+    /// Gets the read-only collection of enum member descriptions for this type (applicable only to enum types).
+    /// </summary>
     [Newtonsoft.Json.JsonIgnore]
     public IReadOnlyList<EnumMemberDescription> EnumMembers => this.enumMembers;
 
+    /// <summary>
+    /// Gets the read-only collection of event descriptions for this type.
+    /// </summary>
     [Newtonsoft.Json.JsonIgnore]
     public IReadOnlyList<EventDescription> Events => this.events;
 
+    /// <summary>
+    /// Adds a member description to the appropriate collection based on its type.
+    /// </summary>
+    /// <param name="member">The member description to add.</param>
+    /// <exception cref="NotSupportedException">Thrown when the member type is not supported.</exception>
     public void AddMember(MemberDescription member)
     {
         switch (member)

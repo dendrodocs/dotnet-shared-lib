@@ -2,10 +2,11 @@
 
   <PropertyGroup>
     <IsPackable>true</IsPackable>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
     
     <Authors>Michaël Hompus</Authors>
     <PackageProjectUrl>https://github.com/DendroDocs/dotnet-shared-lib</PackageProjectUrl>
-    <Description></Description>
+    <Description>Shared library for the DendroDocs ecosystem providing common utilities, data models, and extensions for .NET code analysis and documentation generation.</Description>
     <Copyright>Copyright Michaël Hompus 2019</Copyright>
     <RepositoryUrl>https://github.com/DendroDocs/dotnet-shared-lib</RepositoryUrl>
     <RepositoryType>git</RepositoryType>

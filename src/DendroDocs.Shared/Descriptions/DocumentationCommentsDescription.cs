@@ -6,6 +6,9 @@ using Attribute = DendroDocs.DocumentationComments.Attribute;
 
 namespace DendroDocs;
 
+/// <summary>
+/// Represents parsed XML documentation comments from .NET source code, including summary, remarks, parameters, and other documentation elements.
+/// </summary>
 public partial class DocumentationCommentsDescription
 {
     [GeneratedRegex("(\\s{2,})", RegexOptions.ECMAScript)]
@@ -17,31 +20,66 @@ public partial class DocumentationCommentsDescription
     [GeneratedRegex(@"^\W", RegexOptions.ECMAScript)]
     private static partial Regex WordBoundary();
 
+    /// <summary>
+    /// Gets or sets the example code or usage demonstration from the documentation.
+    /// </summary>
     [DefaultValue("")]
     public string Example { get; set; } = string.Empty;
 
+    /// <summary>
+    /// Gets or sets additional remarks or notes about the documented element.
+    /// </summary>
     [DefaultValue("")]
     public string Remarks { get; set; } = string.Empty;
 
+    /// <summary>
+    /// Gets or sets the description of the return value for methods and properties.
+    /// </summary>
     [DefaultValue("")]
     public string Returns { get; set; } = string.Empty;
 
+    /// <summary>
+    /// Gets or sets the main summary description of the documented element.
+    /// </summary>
     [DefaultValue("")]
     public string Summary { get; set; } = string.Empty;
 
+    /// <summary>
+    /// Gets or sets the value description for properties and fields.
+    /// </summary>
     [DefaultValue("")]
     public string Value { get; set; } = string.Empty;
 
+    /// <summary>
+    /// Gets or sets a dictionary of exception types and their descriptions that may be thrown.
+    /// </summary>
     public Dictionary<string, string> Exceptions { get; set; } = [];
 
+    /// <summary>
+    /// Gets or sets a dictionary of permissions required to access the documented element.
+    /// </summary>
     public Dictionary<string, string> Permissions { get; set; } = [];
 
+    /// <summary>
+    /// Gets or sets a dictionary of method parameter names and their descriptions.
+    /// </summary>
     public Dictionary<string, string> Params { get; set; } = [];
 
+    /// <summary>
+    /// Gets or sets a dictionary of see-also references and their descriptions.
+    /// </summary>
     public Dictionary<string, string> SeeAlsos { get; set; } = [];
 
+    /// <summary>
+    /// Gets or sets a dictionary of generic type parameter names and their descriptions.
+    /// </summary>
     public Dictionary<string, string> TypeParams { get; set; } = [];
 
+    /// <summary>
+    /// Parses XML documentation comment text into a structured representation.
+    /// </summary>
+    /// <param name="documentationCommentXml">The XML documentation comment string to parse.</param>
+    /// <returns>A parsed <see cref="DocumentationCommentsDescription"/> object, or null if the input is empty, null, or unparseable.</returns>
     public static DocumentationCommentsDescription? Parse(string? documentationCommentXml)
     {
         if (string.IsNullOrWhiteSpace(documentationCommentXml) || documentationCommentXml!.StartsWith("<!--", StringComparison.Ordinal))
