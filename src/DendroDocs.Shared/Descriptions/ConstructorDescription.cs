@@ -9,17 +9,6 @@ namespace DendroDocs;
 public class ConstructorDescription(string name) : MemberDescription(name), IHaveAMethodBody, IJsonOnDeserialized
 {
     /// <summary>
-    /// Initializes a new instance of the <see cref="ConstructorDescription"/> class with constructor statements.
-    /// </summary>
-    /// <param name="name">The name of the constructor.</param>
-    /// <param name="statements">The collection of statements in the constructor body.</param>
-    public ConstructorDescription(string name, List<Statement> statements)
-        : this(name)
-    {
-        this.Statements.AddRange(statements ?? []);
-    }
-
-    /// <summary>
     /// Initializes a new instance of the <see cref="ConstructorDescription"/> class with constructor parameters and statements.
     /// </summary>
     /// <param name="name">The name of the constructor.</param>
