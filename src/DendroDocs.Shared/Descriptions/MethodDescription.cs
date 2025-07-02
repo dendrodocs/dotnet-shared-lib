@@ -9,17 +9,19 @@ namespace DendroDocs;
 public class MethodDescription(string? returnType, string name) : MemberDescription(name), IHaveAMethodBody, IJsonOnDeserialized
 {
     /// <summary>
-    /// Initializes a new instance of the <see cref="MethodDescription"/> class with method statements.
+    /// Initializes a new instance of the <see cref="MethodDescription"/> class with method parameters and statements.
     /// </summary>
     /// <param name="returnType">The return type of the method.</param>
     /// <param name="name">The name of the method.</param>
+    /// <param name="parameters">The collection of parameter descriptions for the method.</param>
     /// <param name="statements">The collection of statements in the method body.</param>
     [Newtonsoft.Json.JsonConstructor]
     [JsonConstructor]
-    public MethodDescription(string? returnType, string name, List<Statement> statements)
+    public MethodDescription(string? returnType, string name, List<ParameterDescription>? parameters, List<Statement>? statements)
         : this(returnType, name)
     {
-        this.Statements = statements ?? [];
+        if (parameters is not null) this.Parameters.AddRange(parameters);
+        if (statements is not null) this.Statements.AddRange(statements);
     }
 
     /// <summary>

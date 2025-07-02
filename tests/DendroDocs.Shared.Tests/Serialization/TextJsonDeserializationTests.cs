@@ -480,4 +480,104 @@ public class TextJsonDeserializationTests
         types[0].BaseTypes.ShouldContain("Pitstop.Infrastructure.Messaging.Event");
         types[0].BaseTypes.ShouldContain("System.Object");
     }
+
+    [TestMethod]
+    public void MethodParameters_Should_BeDeserializedCorrectly()
+    {
+        // Assign
+        var json =
+            """
+            [{
+                "FullName": "Pitstop.Application.CustomerManagementAPI.Controllers.CustomersController",
+                "BaseTypes": [
+                    "Microsoft.AspNetCore.Mvc.Controller"
+                ],
+                "Modifiers": 2,
+                "Methods": [{
+                    "Parameters": [{
+                        "Type": "Pitstop.CustomerManagementAPI.Commands.RegisterCustomer",
+                        "Name": "command",
+                        "Attributes": [{
+                            "Type": "Microsoft.AspNetCore.Mvc.FromBodyAttribute",
+                            "Name": "FromBody"
+                        }]
+                    }],
+                    "Name": "RegisterAsync",
+                    "Modifiers": 258,
+                    "Attributes": [{
+                        "Type": "Microsoft.AspNetCore.Mvc.HttpPostAttribute",
+                        "Name": "HttpPost"
+                    }]
+                }]
+            }]
+            """;
+
+        // Act
+        var types = JsonSerializer.Deserialize<List<TypeDescription>>(json, JsonDefaults.DeserializerOptions())!;
+
+        // Assert
+        types.Count.ShouldBe(1);
+        types[0].Methods.Count.ShouldBe(1);
+        
+        var method = types[0].Methods[0];
+        method.Name.ShouldBe("RegisterAsync");
+        method.Parameters.Count.ShouldBe(1);
+        
+        var parameter = method.Parameters[0];
+        parameter.Type.ShouldBe("Pitstop.CustomerManagementAPI.Commands.RegisterCustomer");
+        parameter.Name.ShouldBe("command");
+        parameter.Attributes.Count.ShouldBe(1);
+        
+        var parameterAttribute = parameter.Attributes[0];
+        parameterAttribute.Type.ShouldBe("Microsoft.AspNetCore.Mvc.FromBodyAttribute");
+        parameterAttribute.Name.ShouldBe("FromBody");
+    }
+
+    [TestMethod]
+    public void ConstructorParameters_Should_BeDeserializedCorrectly()
+    {
+        // Assign
+        var json =
+            """
+            [{
+                "FullName": "Test.Class",
+                "Constructors": [{
+                    "Name": "Test",
+                    "Parameters": [{
+                        "Type": "string",
+                        "Name": "name",
+                        "Attributes": [{
+                            "Type": "System.ComponentModel.DataAnnotations.RequiredAttribute",
+                            "Name": "Required"
+                        }]
+                    }, {
+                        "Type": "int",
+                        "Name": "value"
+                    }]
+                }]
+            }]
+            """;
+
+        // Act
+        var types = JsonSerializer.Deserialize<List<TypeDescription>>(json, JsonDefaults.DeserializerOptions())!;
+
+        // Assert
+        types.Count.ShouldBe(1);
+        types[0].Constructors.Count.ShouldBe(1);
+        
+        var constructor = types[0].Constructors[0];
+        constructor.Name.ShouldBe("Test");
+        constructor.Parameters.Count.ShouldBe(2);
+        
+        var firstParameter = constructor.Parameters[0];
+        firstParameter.Type.ShouldBe("string");
+        firstParameter.Name.ShouldBe("name");
+        firstParameter.Attributes.Count.ShouldBe(1);
+        firstParameter.Attributes[0].Type.ShouldBe("System.ComponentModel.DataAnnotations.RequiredAttribute");
+        
+        var secondParameter = constructor.Parameters[1];
+        secondParameter.Type.ShouldBe("int");
+        secondParameter.Name.ShouldBe("value");
+        secondParameter.Attributes.Count.ShouldBe(0);
+    }
 }

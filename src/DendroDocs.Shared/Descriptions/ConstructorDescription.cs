@@ -9,16 +9,18 @@ namespace DendroDocs;
 public class ConstructorDescription(string name) : MemberDescription(name), IHaveAMethodBody, IJsonOnDeserialized
 {
     /// <summary>
-    /// Initializes a new instance of the <see cref="ConstructorDescription"/> class with constructor statements.
+    /// Initializes a new instance of the <see cref="ConstructorDescription"/> class with constructor parameters and statements.
     /// </summary>
     /// <param name="name">The name of the constructor.</param>
+    /// <param name="parameters">The collection of parameter descriptions for the constructor.</param>
     /// <param name="statements">The collection of statements in the constructor body.</param>
     [Newtonsoft.Json.JsonConstructor]
     [JsonConstructor]
-    public ConstructorDescription(string name, List<Statement> statements)
+    public ConstructorDescription(string name, List<ParameterDescription>? parameters, List<Statement>? statements)
         : this(name)
     {
-        this.Statements = statements ?? [];
+        if (parameters is not null) this.Parameters.AddRange(parameters);
+        if (statements is not null) this.Statements.AddRange(statements);
     }
 
     /// <summary>
