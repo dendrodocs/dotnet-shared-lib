@@ -13,12 +13,25 @@ public class ConstructorDescription(string name) : MemberDescription(name), IHav
     /// </summary>
     /// <param name="name">The name of the constructor.</param>
     /// <param name="statements">The collection of statements in the constructor body.</param>
-    [Newtonsoft.Json.JsonConstructor]
-    [JsonConstructor]
     public ConstructorDescription(string name, List<Statement> statements)
         : this(name)
     {
-        this.Statements = statements ?? [];
+        this.Statements.AddRange(statements ?? []);
+    }
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="ConstructorDescription"/> class with constructor parameters and statements.
+    /// </summary>
+    /// <param name="name">The name of the constructor.</param>
+    /// <param name="parameters">The collection of parameter descriptions for the constructor.</param>
+    /// <param name="statements">The collection of statements in the constructor body.</param>
+    [Newtonsoft.Json.JsonConstructor]
+    [JsonConstructor]
+    public ConstructorDescription(string name, List<ParameterDescription>? parameters, List<Statement>? statements)
+        : this(name)
+    {
+        if (parameters is not null) this.Parameters.AddRange(parameters);
+        if (statements is not null) this.Statements.AddRange(statements);
     }
 
     /// <summary>
@@ -26,7 +39,7 @@ public class ConstructorDescription(string name) : MemberDescription(name), IHav
     /// </summary>
     [Newtonsoft.Json.JsonProperty(ItemTypeNameHandling = Newtonsoft.Json.TypeNameHandling.None)]
     [Newtonsoft.Json.JsonConverter(typeof(ConcreteTypeConverter<List<ParameterDescription>>))]
-    public List<ParameterDescription> Parameters { get; init; } = [];
+    public List<ParameterDescription> Parameters { get; } = [];
 
     /// <summary>
     /// Gets the collection of statements that make up the constructor body.

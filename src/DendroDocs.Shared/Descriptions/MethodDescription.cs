@@ -14,12 +14,26 @@ public class MethodDescription(string? returnType, string name) : MemberDescript
     /// <param name="returnType">The return type of the method.</param>
     /// <param name="name">The name of the method.</param>
     /// <param name="statements">The collection of statements in the method body.</param>
-    [Newtonsoft.Json.JsonConstructor]
-    [JsonConstructor]
     public MethodDescription(string? returnType, string name, List<Statement> statements)
         : this(returnType, name)
     {
-        this.Statements = statements ?? [];
+        this.Statements.AddRange(statements ?? []);
+    }
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="MethodDescription"/> class with method parameters and statements.
+    /// </summary>
+    /// <param name="returnType">The return type of the method.</param>
+    /// <param name="name">The name of the method.</param>
+    /// <param name="parameters">The collection of parameter descriptions for the method.</param>
+    /// <param name="statements">The collection of statements in the method body.</param>
+    [Newtonsoft.Json.JsonConstructor]
+    [JsonConstructor]
+    public MethodDescription(string? returnType, string name, List<ParameterDescription>? parameters, List<Statement>? statements)
+        : this(returnType, name)
+    {
+        if (parameters is not null) this.Parameters.AddRange(parameters);
+        if (statements is not null) this.Statements.AddRange(statements);
     }
 
     /// <summary>
@@ -34,7 +48,7 @@ public class MethodDescription(string? returnType, string name) : MemberDescript
     /// </summary>
     [Newtonsoft.Json.JsonProperty(ItemTypeNameHandling = Newtonsoft.Json.TypeNameHandling.None)]
     [Newtonsoft.Json.JsonConverter(typeof(ConcreteTypeConverter<List<ParameterDescription>>))]
-    public List<ParameterDescription> Parameters { get; init; } = [];
+    public List<ParameterDescription> Parameters { get; } = [];
 
     /// <summary>
     /// Gets the collection of statements that make up the method body.
