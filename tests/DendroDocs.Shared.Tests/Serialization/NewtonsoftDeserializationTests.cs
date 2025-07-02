@@ -485,4 +485,100 @@ public class NewtonsoftDeserializationTests
         secondParameter.Name.ShouldBe("value");
         secondParameter.Attributes.Count.ShouldBe(0);
     }
+
+    [TestMethod]
+    public void InvocationArguments_Should_BeDeserializedCorrectly_Newtonsoft()
+    {
+        // Assign
+        var json = """
+            [{
+                "FullName": "Test.Controller",
+                "Methods": [{
+                    "Name": "TestMethod",
+                    "Statements": [{
+                        "$type": "DendroDocs.InvocationDescription, DendroDocs.Shared",
+                        "ContainingType": "Test.Service",
+                        "Name": "PublishMessageAsync",
+                        "Arguments": [{
+                            "Type": "string",
+                            "Text": "e.MessageType"
+                        }, {
+                            "Type": "Test.Event",
+                            "Text": "e"
+                        }]
+                    }]
+                }]
+            }]
+            """;
+
+        // Act
+        var types = JsonConvert.DeserializeObject<List<TypeDescription>>(json, JsonDefaults.DeserializerSettings())!;
+
+        // Assert
+        types.Count.ShouldBe(1);
+        types[0].Methods.Count.ShouldBe(1);
+        types[0].Methods[0].Statements.Count.ShouldBe(1);
+        
+        var invocation = types[0].Methods[0].Statements[0].ShouldBeOfType<InvocationDescription>();
+        invocation.ContainingType.ShouldBe("Test.Service");
+        invocation.Name.ShouldBe("PublishMessageAsync");
+        invocation.Arguments.Count.ShouldBe(2);
+        
+        invocation.Arguments[0].Type.ShouldBe("string");
+        invocation.Arguments[0].Text.ShouldBe("e.MessageType");
+        
+        invocation.Arguments[1].Type.ShouldBe("Test.Event");
+        invocation.Arguments[1].Text.ShouldBe("e");
+    }
+
+    [TestMethod]
+    public void InvocationArguments_Should_BeDeserializedCorrectly_ComplexExample_Newtonsoft()
+    {
+        // Test case based on the original issue's JSON
+        var json = """
+            [{
+                "FullName": "Pitstop.Application.CustomerManagementAPI.Controllers.CustomersController",
+                "Methods": [{
+                    "Name": "RegisterAsync",
+                    "Statements": [{
+                        "$type": "DendroDocs.InvocationDescription, DendroDocs.Shared",
+                        "ContainingType": "Pitstop.Infrastructure.Messaging.IMessagePublisher",
+                        "Name": "PublishMessageAsync",
+                        "Arguments": [{
+                            "Type": "string",
+                            "Text": "e.MessageType"
+                        }, {
+                            "Type": "Pitstop.CustomerManagementAPI.Events.CustomerRegistered",
+                            "Text": "e"
+                        }, {
+                            "Type": "string",
+                            "Text": ""
+                        }]
+                    }]
+                }]
+            }]
+            """;
+
+        // Act
+        var types = JsonConvert.DeserializeObject<List<TypeDescription>>(json, JsonDefaults.DeserializerSettings())!;
+
+        // Assert
+        types.Count.ShouldBe(1);
+        types[0].Methods.Count.ShouldBe(1);
+        types[0].Methods[0].Statements.Count.ShouldBe(1);
+        
+        var invocation = types[0].Methods[0].Statements[0].ShouldBeOfType<InvocationDescription>();
+        invocation.ContainingType.ShouldBe("Pitstop.Infrastructure.Messaging.IMessagePublisher");
+        invocation.Name.ShouldBe("PublishMessageAsync");
+        invocation.Arguments.Count.ShouldBe(3);
+        
+        invocation.Arguments[0].Type.ShouldBe("string");
+        invocation.Arguments[0].Text.ShouldBe("e.MessageType");
+        
+        invocation.Arguments[1].Type.ShouldBe("Pitstop.CustomerManagementAPI.Events.CustomerRegistered");
+        invocation.Arguments[1].Text.ShouldBe("e");
+
+        invocation.Arguments[2].Type.ShouldBe("string");
+        invocation.Arguments[2].Text.ShouldBe("");
+    }
 }
