@@ -1,4 +1,4 @@
-﻿<Project Sdk="MSTest.Sdk/3.7.1">
+﻿<Project Sdk="MSTest.Sdk">
 
   <PropertyGroup>
     <!--
@@ -18,10 +18,6 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Shouldly" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Update="Microsoft.NET.Test.Sdk" />
   </ItemGroup>
 
   <ItemGroup>
