@@ -191,13 +191,13 @@ class Build : NukeBuild
             var sbomArgs = new[]
             {
                 "generate",
-                "-b", $"\"{ArtifactsDirectory}\"",  // Base path for the build output
-                "-bc", ".",                         // Build config root
-                "-m", $"\"{SbomDirectory}\"",       // Output SBOM manifest dir
-                "-pn", ProjectName,                 // Package name",
+                "-b", ArtifactsDirectory.ToString(), // Base path for the build output
+                "-bc", RootDirectory.ToString(),     // Project root
+                "-m", SbomDirectory.ToString(),      // Output SBOM manifest dir
+                "-pn", ProjectName,                  // Package name"
                 "-pv", SemVer,
                 "-nsb", SbomNamespace,
-                "-ps", RepositoryOwner,
+                "-ps", ProductName,
                 "-li", "true",                       // Enable license info
                 "-pm", "true"                        // Enable package manifest
             };
