@@ -12,6 +12,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.Build.Utilities.Core" />
     <PackageDownload Include="GitVersion.Tool" Version="[6.3.0]" />
     <PackageDownload Include="Microsoft.Sbom.DotNetTool" Version="[4.1.0]" />
     <PackageDownload Include="ReportGenerator" Version="[5.4.11]" />
