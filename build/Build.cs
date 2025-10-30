@@ -3,7 +3,6 @@ using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
-using System.Text.RegularExpressions;
 using Nuke.Common;
 using Nuke.Common.CI.GitHubActions;
 using Nuke.Common.Execution;
@@ -230,8 +229,8 @@ class Build : NukeBuild
                 return;
 
             DockerRun(s => s
-                // Trivy version 0.64.1 linux/amd64 corresponds to this SHA256 hash
-                .SetImage("aquasec/trivy@sha256:de90a656e79b175a294abe85cb8b99670fab83ebf339cccd163e6f584846809a")
+                // Trivy version 0.67.2 linux/amd64 corresponds to this SHA256 hash
+                .SetImage("aquasec/trivy@sha256:e2b22eac59c02003d8749f5b8d9bd073b62e30fefaef5b7c8371204e0a4b0c08")
                 .SetRm(true)
                 .AddVolume($"{RootDirectory}:/src:ro")
                 .AddVolume($"{TrivyCacheDirectory}:/root/.cache/trivy:rw")
