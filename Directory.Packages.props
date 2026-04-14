@@ -11,5 +11,6 @@
     <PackageVersion Include="Nuke.Components" Version="9.0.4" />
     <PackageVersion Include="Microsoft.SourceLink.GitHub" Version="8.0.0" />
     <PackageVersion Include="Shouldly" Version="4.3.0" />
+    <PackageVersion Include="System.Security.Cryptography.Xml" Version="9.0.15" />
   </ItemGroup>
 </Project>
