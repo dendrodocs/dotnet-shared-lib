@@ -261,7 +261,6 @@ class Build : NukeBuild
                         "--report-trx " +
                         "--report-trx-filename DendroDocs.Shared.trx " +
                         $"--results-directory {TestResultsDirectory} " +
-                        $"--settings {RootDirectory / "dendrodocs.runsettings"} " +
                         "--coverage " +
                         "--coverage-output coverage.cobertura.xml " +
                         "--coverage-output-format cobertura" +
