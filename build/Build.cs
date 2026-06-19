@@ -229,8 +229,8 @@ class Build : NukeBuild
                 return;
 
             DockerRun(s => s
-                // Trivy version 0.67.2 linux/amd64 corresponds to this SHA256 hash
-                .SetImage("aquasec/trivy@sha256:e2b22eac59c02003d8749f5b8d9bd073b62e30fefaef5b7c8371204e0a4b0c08")
+                // Trivy version 0.71.2 linux/amd64 corresponds to this SHA256 hash
+                .SetImage("aquasec/trivy@sha256:f5d0e600ecda7449e2a9b272805aef698631d3bb3f3a739a750de2c6819acdc9")
                 .SetRm(true)
                 .AddVolume($"{RootDirectory}:/src:ro")
                 .AddVolume($"{TrivyCacheDirectory}:/root/.cache/trivy:rw")
