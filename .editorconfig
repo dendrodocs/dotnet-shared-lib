@@ -13,6 +13,7 @@ indent_style = space
 indent_style = space
 indent_size = 2
 tab_width = 2
+insert_final_newline = true
 
 # Code files 
 [*.{cs,csx,vb,vbx}] 

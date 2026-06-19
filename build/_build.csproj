@@ -18,6 +18,8 @@
     <PackageReference Include="Microsoft.Build.Tasks.Core" />
     <PackageReference Include="Nuke.Common" />
     <PackageReference Include="Nuke.Components" />
+    <PackageReference Include="NuGet.Packaging" />
+    <PackageReference Include="System.Security.Cryptography.Xml" />
   </ItemGroup>
 
 </Project>
