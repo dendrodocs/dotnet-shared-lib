@@ -4,7 +4,7 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageVersion Include="Microsoft.Build" Version="17.11.48" />
-    <PackageVersion Include="Microsoft.Build.Tasks.Core" Version="17.14.28" />
+    <PackageVersion Include="Microsoft.Build.Tasks.Core" Version="18.8.2" />
     <PackageVersion Include="Newtonsoft.Json" Version="13.0.4" />
     <PackageVersion Include="Nuke.Common" Version="9.0.4" />
     <PackageVersion Include="Nuke.Components" Version="9.0.4" />
