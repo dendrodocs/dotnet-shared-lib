@@ -3,13 +3,14 @@
     <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
   </PropertyGroup>
   <ItemGroup>
-    <PackageVersion Include="Microsoft.Build" Version="17.11.48" />
+    <PackageVersion Include="coverlet.collector" Version="6.0.4" />
+    <PackageVersion Include="Microsoft.Build" Version="17.14.28" />
     <PackageVersion Include="Microsoft.Build.Tasks.Core" Version="17.14.28" />
     <PackageVersion Include="Newtonsoft.Json" Version="13.0.4" />
     <PackageVersion Include="Nuke.Common" Version="9.0.4" />
     <PackageVersion Include="Nuke.Components" Version="9.0.4" />
+    <PackageVersion Include="NuGet.Packaging" Version="6.14.3" />
     <PackageVersion Include="Shouldly" Version="4.3.0" />
-    <PackageVersion Include="NuGet.Packaging" Version="6.12.5" />
-    <PackageVersion Include="System.Security.Cryptography.Xml" Version="9.0.15" />
+    <PackageVersion Include="System.Security.Cryptography.Xml" Version="9.0.20" />
   </ItemGroup>
 </Project>
