@@ -18,6 +18,8 @@
     <PackageReference Include="Microsoft.Build.Tasks.Core" />
     <PackageReference Include="Nuke.Common" />
     <PackageReference Include="Nuke.Components" />
+    <!-- Security-patched transitive dependencies used by the NUKE build host. -->
+    <PackageReference Include="Microsoft.Build" />
     <PackageReference Include="NuGet.Packaging" />
     <PackageReference Include="System.Security.Cryptography.Xml" />
   </ItemGroup>
